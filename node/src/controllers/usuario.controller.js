@@ -6,15 +6,19 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('../services/jwt');
 
 //Funciones
+
+//FUNCIÓN PARA REGISTRAR UN USUARIO
 function registrarUsuario (req,res){
     var usuarioConstructor = new usuarioModel();
     var params = req.body;
 
-    usuarioConstructor.usuario = params.user;
+    usuarioConstructor.usuario = params.usuario;
     usuarioConstructor.nombre = params.nombre;
     usuarioConstructor.apellido = params.apellido;
     usuarioConstructor.direccion = params.direccion;
     usuarioConstructor.telefono = params.telefono;
+    usuarioConstructor.correo = params.correo;
+    usuarioConstructor.imagen = null;
     usuarioConstructor.rol = 'ROL_USUARIO';
 
     usuarioModel.find({ usuario: usuarioConstructor.usuario }).exec((err, usuarioEncontrado)=>{
@@ -42,6 +46,7 @@ function registrarUsuario (req,res){
     });
 }
 
+//FUNCIÓN PARA CONVERTIR A UN USUARIO ADMINISTRADOR
 function agregarAdministrador (req,res){
     var idUsuario = req.params.idUsuario;
     
@@ -53,6 +58,54 @@ function agregarAdministrador (req,res){
     });
 }
 
+//FUNCIÓN PARA EDITAR UN USUARIO
+function editarUsuario (req,res){
+    var idUsuario = req.params.idUsuario;
+    var params = req.body;
+
+    //buscamos y actualizamos el usuario
+    usuarioModel.findOneAndUpdate({ _id: idUsuario, rol: 'ROL_USUARIO' }, {usuario: params.usuario, 
+        nombre: params.nombre, 
+        apellido: params.apellido,
+        direccion: params.direccion,
+        telefono: params.telefono,
+        correo: params.correo,
+        imagen: params.imagen
+        },{new: true, useFindAndModify: false},(err, usuarioActualizado)=>{
+        if(err) return res.status(500).send({ mensaje: 'Vaya... ha saltado un error'});
+        if(!usuarioActualizado) return res.status(500).send({ mensaje: 'No se ha encontrado este usuario y / o este usuario es administrador'});
+    
+        return res.status(200).send({ usuarioActualizado });
+    });
+}
+
+//FUNCIÓN PARA ELIMINAR UN USUARIO
+function eliminarUsuario(req,res){
+    var idUsuario = req.params.idUsuario;
+
+    //buscamos y eliminamos por medio del ID 
+    usuarioModel.findByIdAndDelete({ _id: idUsuario, rol:'ROL_USUARIO'}, (err, usuarioEliminado)=>{
+        if(err) return  res.status(500).send({ mensaje: 'Nos hemos topado con un error' });
+        if(!usuarioEliminado) return res.status(500).send({ mensaje: 'No se ha encontrado este usuario y / o este usuario es administrador'});
+    
+        return res.status(200).send({ usuarioEliminado });
+    });
+}
+
+//FUNCIÓN PARA VISUALIZAR UN USUARIO 
+function verUsuario(req,res){
+    var idUsuario = req.params.idUsuario;
+
+    //buscamos el usuario por id y lo mostramos
+    usuarioModel.findById({ _id: idUsuario, rol:'ROL_USUARIO'}, (err, verUsuario)=>{
+        if(err) return res.status(500).send({ mensaje: 'Ha ocurrido un error brother' });
+        if(!verUsuario) return res.status(500).send({ mensaje: 'No se ha encontrado el usuario o es administrador'});
+
+        return res.status(200).send({ verUsuario });
+    })
+}
+
+//FUNCIÓN PARA INICIAR SESIÓN
 function login(req, res) {
     var params = req.body;
     usuarioModel.findOne({ usuario: params.usuario }, (err, usuarioEncontrado) => {
@@ -74,12 +127,15 @@ function login(req, res) {
             return res.status(500).send({ mensaje: 'Error al obtener usuario' });
         }
     })
-
-    
     
 }
+
+//EXPORTACIÓN DE FUNCIONES
 module.exports = {
     registrarUsuario,
     agregarAdministrador,
-    login
+    login,
+    editarUsuario,
+    eliminarUsuario,
+    verUsuario
 }
