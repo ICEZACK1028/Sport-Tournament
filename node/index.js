@@ -7,7 +7,7 @@ const Usuario = require('./src/models/usuario.model')
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/sportTournament', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
 
-    console.log('Conectado a la base de datos gestorHoteles');
+    console.log('Conectado a la base de datos Sport Tournament');
     app.listen(3000, function() {
         console.log('Se encuentra corriendo en el puerto 3000');
 

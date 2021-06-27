@@ -5,10 +5,14 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var secret = 'secretPassword';
 
-function createToken (usuario){
+exports.createToken = function (usuario){
     var payload={
         sub: usuario._id,
         usuario: usuario.usuario,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        direccion: usuario.direccion,
+        telefono: usuario.telefono,
         correo: usuario.correo,
         rol: usuario.rol,
         imagen: usuario.imagen,
@@ -18,5 +22,3 @@ function createToken (usuario){
 
     return jwt.encode(payload, secret);
 }
-
-module.exports = createToken; 
