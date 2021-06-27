@@ -25,4 +25,3 @@ function login(req, res) {
         }
     })
 }
-
