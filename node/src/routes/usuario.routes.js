@@ -9,6 +9,7 @@ const md_authentication = require('../middlewares/authenticated');
 var api = express.Router();
 
 api.post('/registrarUsuario', usuarioController.registrarUsuario);
+api.put('/agregarAdministrador/:idUsuario', md_authentication.ensureAuth, usuarioController.agregarAdministrador);
 
 //Exportación
 module.exports= api;

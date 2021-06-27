@@ -21,16 +21,20 @@ function registrarUsuario (req,res){
         if(err) return res.status(500).send({ mensaje: 'Ha surgido un error' });
 
         if(usuarioEncontrado && usuarioEncontrado.length >= 1){
-            return res.status(500).send({ mensaje: `El usuario '${params.user}' ya está en uso. Prueba con otro` });
+            return res.status(500).send({ 
+                mensaje: `El usuario '${params.user}' ya está en uso. Prueba con otro` 
+            });
         }else{
             bcrypt.hash(params.password, null, null, (err, passwordEncriptada)=>{
                 usuarioConstructor.password = passwordEncriptada;
 
                 usuarioConstructor.save((err, usuarioGuardado )=>{
                     if(usuarioGuardado){
-                        return res.status(500).send({ usuarioGuardado });
+                        return res.status(200).send({ usuarioGuardado });
                     }else{
-                        return res.status(500).send({ mensaje: 'No se ha podido registrar el usuario, inténtalo de nuevo' });
+                        return res.status(500).send({ 
+                            mensaje: 'No se ha podido registrar el usuario, inténtalo de nuevo' 
+                        });
                     };
                 });
             });
@@ -39,7 +43,14 @@ function registrarUsuario (req,res){
 }
 
 function agregarAdministrador (req,res){
+    var idUsuario = req.params.idUsuario;
+    
+    usuarioModel.findOneAndUpdate({ _id: idUsuario, rol: 'ROL_USUARIO' }, { rol: 'ROL_ADMINISTRADOR' }, {new: true, useFindAndModify: false }, (err, nuevoAdmin)=>{
+        if(err) return res.status(500).send({ mensaje: 'Ha ocurrido un error' });
+        if(!nuevoAdmin) return res.status(500).send({ mensaje: 'No se ha encontrado este usuario y / o este usuario es administrador' });
 
+        return res.status(200).send({ nuevoAdmin });
+    });
 }
 
 function login(req, res) {
@@ -64,9 +75,10 @@ function login(req, res) {
         }
     })
 
-    
+
     module.exports = {
-        registrarUsuario
+        registrarUsuario,
+        agregarAdministrador
     }
 
 }
