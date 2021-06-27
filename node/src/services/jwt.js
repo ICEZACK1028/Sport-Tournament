@@ -5,17 +5,17 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var secret = 'secretPassword';
 
-exports.createToken = function (usuario){
+exports.createToken = function (user){
     var payload={
-        sub: usuario._id,
-        usuario: usuario.usuario,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        direccion: usuario.direccion,
-        telefono: usuario.telefono,
-        correo: usuario.correo,
-        rol: usuario.rol,
-        imagen: usuario.imagen,
+        sub: user._id,
+        usuario: user.usuario,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        direccion: user.direccion,
+        telefono: user.telefono,
+        correo: user.correo,
+        rol: user.rol,
+        imagen: user.imagen,
         iat: moment().unix(),
         exp: moment().day(10, 'days').unix()
     }
