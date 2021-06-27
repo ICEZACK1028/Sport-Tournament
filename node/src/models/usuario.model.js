@@ -10,7 +10,7 @@ var UsuarioSchema = Schema({
     correo: String,
     password: String,
     rol: String,
-    imagen: String,
+    imagen: String
 })
 
 module.exports = mongoose.model('usuarios', UsuarioSchema);

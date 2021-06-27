@@ -44,7 +44,7 @@ function agregarAdministrador (req,res){
 
 function login(req, res) {
     var params = req.body;
-    Usuario.findOne({ usuario: params.usuario }, (err, usuarioEncontrado) => {
+    usuarioModel.findOne({ usuario: params.usuario }, (err, usuarioEncontrado) => {
         if (err) return res.status(500).send({ mensaje: 'Error en la peticion de usuario Usuario' });
         if (usuarioEncontrado) {
             bcrypt.compare(params.password, usuarioEncontrado.password, (err, passCorrecta) => {
@@ -65,8 +65,9 @@ function login(req, res) {
     })
 
     
-    module.exports = {
-        registrarUsuario
-    }
-
+    
+}
+module.exports = {
+    registrarUsuario,
+    login
 }

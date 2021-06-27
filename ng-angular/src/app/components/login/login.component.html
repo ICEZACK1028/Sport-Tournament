@@ -1,1 +1,5 @@
-<p>login works!</p>
+<form>
+    <input type="text" placeholder="Tu Usuario" name='usuario' #usuario='ngModel' [(ngModel)]='usuarioModel.usuario'>
+    <input type="password" placeholder="Password" name="password" #password="ngModel" [(ngModel)]="usuarioModel.password">
+    <button (click)='login()'> Sign in </button>
+</form>
