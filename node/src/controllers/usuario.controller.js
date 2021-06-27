@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use strict'
 const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt-nodejs');
@@ -25,3 +26,6 @@ function login(req, res) {
         }
     })
 }
+=======
+"use strict"
+>>>>>>> develop
