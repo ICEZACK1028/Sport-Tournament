@@ -14,16 +14,20 @@ export class UsuarioService {
   public token;
   public user: Usuario;
 
-  constructor(public _http: HttpClient) { 
+  constructor(public _http: HttpClient) {
     this.url = GLOBAL.url
+  }
+
+  JsonConvert(Var){
+    let convertVar = JSON.stringify(Var);
+    return convertVar;
   }
 
   login(usuario, obtenerToken=null):Observable<any>{
     if (obtenerToken != null){
       usuario.obtenerToken = obtenerToken;
     }
-    let params =JSON.stringify(usuario)
-    return this._http.post(this.url + '/login', params,{headers:this.headersVariable})
+    return this._http.post(this.url + '/login', this.JsonConvert(usuario),{headers:this.headersVariable})
   }
 
   getIdentidad(){
