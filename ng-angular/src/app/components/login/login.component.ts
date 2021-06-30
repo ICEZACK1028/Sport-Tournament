@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
   public identidad
 
   constructor(private _usuarioService: UsuarioService, private _router: Router) {
-    this.usuarioModel = new Usuario ("","","","","","","","","")
-     }
+    this.usuarioModel = new Usuario("","","","","","","","","","");
+  }
 
   ngOnInit(): void {
   }
@@ -26,11 +26,9 @@ export class LoginComponent implements OnInit {
       response => {
         this.token = response.token;
         localStorage.setItem('token',this.token)
-
       },
       error=> {
         console.log(<any>error);
-        
       }
     )
   }

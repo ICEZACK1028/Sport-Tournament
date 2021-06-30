@@ -50,4 +50,8 @@ export class UsuarioService {
     return this.token;
   }
 
+  registro(usuario: Usuario): Observable<any>{
+    return this._http.post(`${this.url}registrarUsuario`, this.JsonConvert(usuario), {headers: this.headersVariable});
+  }
+
 }
