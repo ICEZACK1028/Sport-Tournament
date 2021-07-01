@@ -25,6 +25,6 @@ exports.ensureAuth = function (req, res, next){
         });
     }
 
-    req.user = payload.user;
+    req.user = payload;
     next();
 }

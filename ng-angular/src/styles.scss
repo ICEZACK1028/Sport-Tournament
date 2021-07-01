@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+.bi{
+    color: #dc3545;
+    cursor: pointer;
+}
+
+.btn-primary{
+    background-color: #dc3545  !important;
+    border-color: #dc3545  !important;
+}
