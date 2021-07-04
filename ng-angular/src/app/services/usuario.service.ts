@@ -51,7 +51,7 @@ export class UsuarioService {
   }
 
   registro(usuario: Usuario): Observable<any>{
-    return this._http.post(`${this.url}registrarUsuario`, this.JsonConvert(usuario), {headers: this.headersVariable});
+    return this._http.post(`${this.url}/registrarUsuario`, this.JsonConvert(usuario), {headers: this.headersVariable});
   }
 
 }
