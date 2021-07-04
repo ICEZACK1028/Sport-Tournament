@@ -72,6 +72,11 @@ export class LoginComponent implements OnInit {
         console.log(<any>error);
       }
     )
+    this.refreshPage();
+  }
+
+  refreshPage(){
+    window.location.reload();
   }
 
 }
