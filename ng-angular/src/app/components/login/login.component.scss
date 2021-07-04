@@ -102,9 +102,18 @@ form {
 	width: 100%;
 }
 
-input {
+input{
   background-color:#eee;
   border-color: #fff;
+}
+
+#imagen #spanImagen{
+  border-color: #eee;
+}
+
+#spanImagen{
+  color: #6C757D;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .container {
