@@ -93,12 +93,18 @@ form {
 	text-align: center;
 }
 
-input {
+.inputL {
 	background-color: #eee;
 	border: none;
+  border-radius: 3px;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
+}
+
+input {
+  background-color:#eee;
+  border-color: #fff;
 }
 
 .container {
@@ -108,7 +114,7 @@ input {
 			0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
 	overflow: hidden;
-	width: 768px;
+	width: 800px;
 	max-width: 100%;
 	min-height: 480px;
 }
