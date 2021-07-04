@@ -18,7 +18,7 @@ function registrarUsuario (req,res){
     usuarioConstructor.direccion = params.direccion;
     usuarioConstructor.telefono = params.telefono;
     usuarioConstructor.correo = params.correo;
-    usuarioConstructor.imagen = null;
+    usuarioConstructor.imagen = params.imagen;
     usuarioConstructor.rol = 'ROL_USUARIO';
 
     usuarioModel.find({ usuario: usuarioConstructor.usuario }).exec((err, usuarioEncontrado)=>{
