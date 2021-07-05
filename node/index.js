@@ -14,6 +14,12 @@ mongoose.connect('mongodb://localhost:27017/sportTournament', { useNewUrlParser:
         var usuarioModel = new Usuario()
         usuarioModel.usuario = "ADMIN"
         var secret = 'deportes123'
+        usuarioModel.nombre = "N/A";
+        usuarioModel.apellido = "";
+        usuarioModel.direccion = "N/A";
+        usuarioModel.telefono = "N/A";
+        usuarioModel.correo = "N/A";
+        usuarioModel.imagen = "https://static.wikia.nocookie.net/new-fantendo/images/2/24/Soy_Admin.jpg/revision/latest/scale-to-width-down/720?cb=20200728204122&path-prefix=es";
         usuarioModel.rol = 'ROL_ADMIN'
 
         Usuario.find({ usuario: usuarioModel.usuario }).exec((err, usuarioEncontrado) => {
