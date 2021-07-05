@@ -14,6 +14,7 @@ api.post('/login', usuarioController.login);
 api.put('/editarUsuario/:idUsuario', md_authentication.ensureAuth, usuarioController.editarUsuario);
 api.delete('/eliminarUsuario/:idUsuario', md_authentication.ensureAuth, usuarioController.eliminarUsuario);
 api.get('/verUsuario/:idUsuario', md_authentication.ensureAuth, usuarioController.verUsuario);
+api.get('/listarUsuarios', usuarioController.listarUsuarios);
 
 //Exportación
 module.exports= api;
