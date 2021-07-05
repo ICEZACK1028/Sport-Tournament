@@ -54,4 +54,13 @@ export class UsuarioService {
     return this._http.post(`${this.url}/registrarUsuario`, this.JsonConvert(usuario), {headers: this.headersVariable});
   }
 
+  listarUsuarios(): Observable<any>{
+    return this._http.get(`${this.url}/listarUsuarios`, {headers: this.headersVariable});
+  }
+
+  verUsuario(id:string): Observable<any>{
+    return this._http.get(`${this.url}/verUsuario/${id}`, {headers: this.headersVariable});
+  }
+
+
 }

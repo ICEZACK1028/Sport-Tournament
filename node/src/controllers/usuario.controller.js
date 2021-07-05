@@ -92,6 +92,17 @@ function eliminarUsuario(req,res){
     });
 }
 
+//FUNCIÓN PARA LISTAR USUARIOS
+function listarUsuarios(req,res){
+    
+    usuarioModel.find((err, usuariosListados)=>{
+        if(err) return res.status(500).send({ mensaje: 'Ha surgido un error brother' });
+        if(!usuariosListados) return res.status(500).send({ mensaje: 'No se han encontrado usuarios' });
+
+        return res.status(200).send({ usuariosListados });
+    })
+}
+
 //FUNCIÓN PARA VISUALIZAR UN USUARIO 
 function verUsuario(req,res){
     var idUsuario = req.params.idUsuario;
@@ -137,5 +148,6 @@ module.exports = {
     login,
     editarUsuario,
     eliminarUsuario,
-    verUsuario
+    verUsuario,
+    listarUsuarios
 }

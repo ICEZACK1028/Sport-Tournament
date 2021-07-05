@@ -16,6 +16,18 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.listarUsuarios();
+  }
+
+  listarUsuarios(){
+    this._usuarioService.listarUsuarios().subscribe(
+      res=>{
+        this.usuarios = res.usuariosListados;
+      },
+      err=>{
+        console.log(<any>err);
+      }
+    )
   }
 
 }
