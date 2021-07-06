@@ -57,6 +57,12 @@ table.table tr th, table.table tr td {
 padding: 12px 15px;
 vertical-align: middle;
 }
+.actions{
+  width: 150px;
+}
+.name{
+  width: 200px;
+}
 table.table tr th:first-child {
 width: 60px;
 }
@@ -79,21 +85,27 @@ opacity: 0.9;
 font-size: 22px;
   margin: 0 5px;
 }
-table.table td a {
+table.table td button {
 font-weight: bold;
-color: #566787;
+color: #303443;
 display: inline-block;
 text-decoration: none;
 outline: none !important;
 }
-table.table td a:hover {
-color: #2196F3;
-}
-table.table td a.edit {
+table.table td button.edit {
   color: #FFC107;
 }
-table.table td a.delete {
+table.table td button.see {
+  color: #0077BE;
+}
+table.table td button.delete {
   color: #F44336;
+}
+table.table td button.star {
+  color: #F2C705;
+}
+table.table td .buttonEdit:hover {
+  transform: translateY(-2px);
 }
 table.table td i {
   font-size: 19px;
@@ -130,6 +142,22 @@ margin-right: 10px;
 }
 .pagination li.disabled i {
   color: #ccc;
+}
+.bi-eye-fill {
+  color: blue;
+}
+.buttonEdit {
+  border: none;
+  background-color: transparent;
+  padding: 0px;
+}
+button:hover{
+  cursor: pointer;
+}
+.buttonAdmin{
+  border: none;
+  background-color: transparent;
+  padding: 0px;
 }
 .pagination li i {
   font-size: 16px;
