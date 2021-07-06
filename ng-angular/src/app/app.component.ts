@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-angular';
+
+  constructor() { }
+
+  usuarioLogueado(){
+    if(JSON.parse(localStorage.getItem('identidad')) == null){
+      return false
+    }else{
+      return true
+    }
+  }
+
 }
