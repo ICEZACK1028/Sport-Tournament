@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
         this.getToken()
         if(this.identidad.rol == "ROL_ADMIN")this._router.navigate(['/home-admin'])
         if(this.identidad.rol == "ROL_USUARIO")this._router.navigate(['/home'])
+        
       },
       error => {
         console.log(<any>error);
