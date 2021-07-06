@@ -19,17 +19,17 @@ export class LigaService {
     let headersToken = this.headers.set('Authorization', token)
     return this._http.get(this.url+'/obtenerLigas',{headers:headersToken})
   }
-
+  
   obtenerLigaId(id: String): Observable<any>{
     return this._http.get(this.url+'/obtenerLigaId/'+ id, {headers: this.headers})
   }
-
+  
   agregarLiga(liga,token): Observable<any> {
     let headersToken = this.headers.set('Authorization', token)
     let params = JSON.stringify(liga)
     return this._http.post(this.url+'/registrarLiga',params,{headers:headersToken})
   }
-
+  
   editarLiga(liga,idLiga,token): Observable<any> {
     let headersToken = this.headers.set('Authorization', token)
     let params = JSON.stringify(liga)
@@ -40,5 +40,10 @@ export class LigaService {
     let headersToken = this.headers.set('Authorization', token)
     return this._http.delete(this.url+'/eliminarLiga/'+idLiga,{headers:headersToken})
   }
-
+  
+  obtenerLigasAll(token): Observable<any>{
+    let headersToken = this.headers.set('Authorization', token)
+    return this._http.get(this.url+'/obtenerLigasAll',{headers:headersToken})
+  }
+  
 }

@@ -40,7 +40,9 @@ export class LoginComponent implements OnInit {
         this.identidad = response.usuarioEncontrado;
         localStorage.setItem('identidad', JSON.stringify(this.identidad))
         this.getToken()
-        this._router.navigate(['/home'])
+        if(this.identidad.rol == "ROL_ADMIN")this._router.navigate(['/home-admin'])
+        if(this.identidad.rol == "ROL_USUARIO")this._router.navigate(['/home'])
+        
       },
       error => {
         console.log(<any>error);
