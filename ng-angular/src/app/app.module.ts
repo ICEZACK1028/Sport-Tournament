@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { EquiposComponent } from './components/equipos/equipos.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
     LoginComponent,
     NavbarComponent,
     UsuariosComponent,
+    EquiposComponent,
   ],
   imports: [
     BrowserModule,
