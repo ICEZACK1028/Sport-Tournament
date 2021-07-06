@@ -8,6 +8,14 @@ function registrarEquipo(req, res){
 
     equipo.nombre = params.nombre;
     equipo.imagen = params.imagen;
+    equipo.PJ = 0;
+    equipo.PG = 0;
+    equipo.PP = 0;
+    equipo.PE = 0;
+    equipo.GF = 0;
+    equipo.GC = 0;
+    equipo.DG = 0;
+    equipo.PT = 0;
     equipo.ligaID = ligaID;
 
     equipoModel.findOne({nombre: params.nombre}, (err, encontrarEquipo) =>{
@@ -19,6 +27,18 @@ function registrarEquipo(req, res){
             return res.status(200).send({guardarEquipo})
         })
     })
+}
+
+function editarEquipo(req, res){
+
+}
+
+function eliminarEquipo(req, res){
+
+}
+
+function obtenerEquipo(req, res){
+
 }
 
 
