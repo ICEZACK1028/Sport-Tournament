@@ -9,5 +9,6 @@ api.post('/registrarLiga', md_autenticacion.ensureAuth, ligaController.registrar
 api.put('/editarLiga/:idLiga', md_autenticacion.ensureAuth,ligaController.editarLiga)
 api.delete('/eliminarLiga/:idLiga', md_autenticacion.ensureAuth,ligaController.eliminarLiga)
 api.get('/obtenerLigaId/:idLiga',ligaController.obtenerLigaId)
+api.get('/obtenerLigasAll', md_autenticacion.ensureAuth, ligaController.obtenerLigasAll)
 
 module.exports = api

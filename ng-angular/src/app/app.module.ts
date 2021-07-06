@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { EquiposComponent } from './components/equipos/equipos.component';
+import { LigasAdminComponent } from './components/ligas-admin/ligas-admin.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { EquiposComponent } from './components/equipos/equipos.component';
     NavbarComponent,
     UsuariosComponent,
     EquiposComponent,
+    LigasAdminComponent,
   ],
   imports: [
     BrowserModule,
