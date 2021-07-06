@@ -12,12 +12,14 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class LigasAdminComponent implements OnInit {
   public token
   public ligasModel
+  public ligaModelAdd
   public usuarioObjeto
   public ligaModelId
   public idLiga
 
   constructor(private _usuarioService: UsuarioService,private _ligaService: LigaService) { 
     this.ligasModel = new Liga("","","","","")
+    this.ligaModelAdd = new Liga("","","","","")
     this.ligaModelId = new Liga("","","","","")
   }
 
@@ -41,6 +43,15 @@ export class LigasAdminComponent implements OnInit {
         this.ligaModelId = response.ligaEncontrada
         this.idLiga = idLiga
         console.log(response);
+      }
+    )
+  }
+
+  agregarLiga(){
+    this._ligaService.agregarLiga(this.ligaModelAdd,this.token).subscribe(
+      response => {
+        console.log(response);
+        this.obtenerLigasAll()
       }
     )
   }
