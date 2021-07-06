@@ -5,6 +5,6 @@ const md_autenticacion = require('../middlewares/authenticated')
 
 var api = express.Router()
 
-api.post('/registrarEquipo', md_autenticacion.ensureAuth, equipoController.registrarEquipo);
+api.post('/registrarEquipo/:ligaID',  equipoController.registrarEquipo);
 
 module.exports = api
