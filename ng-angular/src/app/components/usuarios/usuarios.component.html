@@ -26,8 +26,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let u of usuarios">
-            <td class="name"><button class="buttonAdmin star" type="button" disabled><i class="material-icons" style="font-size: 12px" data-toggle="tooltip"
-              title="Delete">&#xf0ec;</i></button> {{u.nombre+' '+u.apellido}}</td>
+            <td class="name"><button *ngIf="u.rol == 'ROL_ADMIN'" class="buttonAdmin star" type="button" disabled><i class="material-icons" style="font-size: 12px" data-toggle="tooltip"
+              title="Delete">&#xf0ec;</i></button> <button *ngIf="u.rol != 'ROL_ADMIN'" class="buttonAdmin" type="button" disabled><i class="material-icons" style="font-size: 12px" data-toggle="tooltip"
+                title="Delete">&#xe851;</i></button> {{u.nombre+' '+u.apellido}}</td>
             <td>{{u.usuario}}</td>
             <td>{{u.direccion}}</td>
             <td>{{u.telefono}}</td>
