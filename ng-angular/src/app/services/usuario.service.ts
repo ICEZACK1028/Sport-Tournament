@@ -54,13 +54,32 @@ export class UsuarioService {
     return this._http.post(`${this.url}/registrarUsuario`, this.JsonConvert(usuario), {headers: this.headersVariable});
   }
 
+  registrarAdmin(usuario: Usuario): Observable<any>{
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.post(`${this.url}/registrarAdministrador`, this.JsonConvert(usuario), {headers: headersToken});
+  }
+
   listarUsuarios(): Observable<any>{
     return this._http.get(`${this.url}/listarUsuarios`, {headers: this.headersVariable});
   }
 
   verUsuario(id:string): Observable<any>{
-    return this._http.get(`${this.url}/verUsuario/${id}`, {headers: this.headersVariable});
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.get(`${this.url}/verUsuario/${id}`, {headers: headersToken});
   }
 
+  editarUsuario(usuario: Usuario): Observable<any>{
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.put(`${this.url}/editarUsuario/${usuario._id}`, this.JsonConvert(usuario), {headers: headersToken});
+  }
+
+  eliminarUsuario(id:String): Observable<any>{
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.delete(`${this.url}/eliminarUsuario/${id}`, {headers: headersToken});
+  }
 
 }
