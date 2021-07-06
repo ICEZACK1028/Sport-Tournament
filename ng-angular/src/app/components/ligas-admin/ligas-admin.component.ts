@@ -4,33 +4,35 @@ import { LigaService } from 'src/app/services/liga.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  providers: [LigaService, UsuarioService]
+  selector: 'app-ligas-admin',
+  templateUrl: './ligas-admin.component.html',
+  styleUrls: ['./ligas-admin.component.scss'],
+  providers:[UsuarioService,LigaService]
 })
-export class HomeComponent implements OnInit {
+export class LigasAdminComponent implements OnInit {
+  public token
+  public ligasModel
   public ligaModelAdd
-  public ligaModelGet
+  public usuarioObjeto
   public ligaModelId
   public idLiga
-  public token;
 
-  constructor(private _ligaService: LigaService, private _usuarioService: UsuarioService) { 
-    this.token = this._usuarioService.getToken()
-    this.ligaModelAdd = new Liga("","","","","")  
-    this.ligaModelId = new Liga("","","","","")  
+  constructor(private _usuarioService: UsuarioService,private _ligaService: LigaService) { 
+    this.ligasModel = new Liga("","","","","")
+    this.ligaModelAdd = new Liga("","","","","")
+    this.ligaModelId = new Liga("","","","","")
   }
 
   ngOnInit(): void {
-    this.obtenerLigas()
+    this.token = this._usuarioService.getToken()
+    this.obtenerLigasAll()
   }
 
-  obtenerLigas(){
-    this._ligaService.obtenerLigas(this.token).subscribe(
+  obtenerLigasAll(){
+    this._ligaService.obtenerLigasAll(this.token).subscribe(
       response => {
-        this.ligaModelGet = response.ligasEncontradas
-        console.log(response);
+        this.ligasModel = response.ligasEncontradas
+        console.log(this.ligasModel);
       }
     )
   }
@@ -49,7 +51,7 @@ export class HomeComponent implements OnInit {
     this._ligaService.agregarLiga(this.ligaModelAdd,this.token).subscribe(
       response => {
         console.log(response);
-        this.obtenerLigas()
+        this.obtenerLigasAll()
       }
     )
   }
@@ -58,7 +60,7 @@ export class HomeComponent implements OnInit {
     this._ligaService.editarLiga(this.ligaModelId,this.idLiga,this.token).subscribe(
       response => {
         console.log(response);
-        this.obtenerLigas()
+        this.obtenerLigasAll()
       }
     )
   }
@@ -67,8 +69,9 @@ export class HomeComponent implements OnInit {
     this._ligaService.eliminarLiga(this.idLiga,this.token).subscribe(
       response => {
         console.log(response);
-        this.obtenerLigas()
+        this.obtenerLigasAll()
       }
     )
   }
+
 }

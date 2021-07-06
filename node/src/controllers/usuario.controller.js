@@ -46,6 +46,45 @@ function registrarUsuario (req,res){
     });
 }
 
+//FUNCIÓN PARA AGREGAR UN USUARIO ADMINISTRADOR
+function registrarAdmin (req,res){
+    var usuarioConstructor = new usuarioModel();
+    var params = req.body;
+
+    usuarioConstructor.usuario = params.usuario;
+    usuarioConstructor.nombre = params.nombre;
+    usuarioConstructor.apellido = params.apellido;
+    usuarioConstructor.direccion = params.direccion;
+    usuarioConstructor.telefono = params.telefono;
+    usuarioConstructor.correo = params.correo;
+    usuarioConstructor.imagen = params.imagen;
+    usuarioConstructor.rol = 'ROL_ADMIN';
+
+    usuarioModel.find({ usuario: usuarioConstructor.usuario }).exec((err, usuarioEncontrado)=>{
+        if(err) return res.status(500).send({ mensaje: 'Ha surgido un error' });
+
+        if(usuarioEncontrado && usuarioEncontrado.length >= 1){
+            return res.status(500).send({ 
+                mensaje: `El usuario '${params.user}' ya está en uso. Prueba con otro` 
+            });
+        }else{
+            bcrypt.hash(params.password, null, null, (err, passwordEncriptada)=>{
+                usuarioConstructor.password = passwordEncriptada;
+
+                usuarioConstructor.save((err, usuarioGuardado )=>{
+                    if(usuarioGuardado){
+                        return res.status(200).send({ usuarioGuardado });
+                    }else{
+                        return res.status(500).send({ 
+                            mensaje: 'No se ha podido registrar el usuario, inténtalo de nuevo' 
+                        });
+                    };
+                });
+            });
+        };
+    });
+}
+
 //FUNCIÓN PARA CONVERTIR A UN USUARIO ADMINISTRADOR
 function agregarAdministrador (req,res){
     var idUsuario = req.params.idUsuario;
@@ -70,6 +109,7 @@ function editarUsuario (req,res){
         direccion: params.direccion,
         telefono: params.telefono,
         correo: params.correo,
+        rol: params.rol,
         imagen: params.imagen
         },{new: true, useFindAndModify: false},(err, usuarioActualizado)=>{
         if(err) return res.status(500).send({ mensaje: 'Vaya... ha saltado un error'});
@@ -149,5 +189,6 @@ module.exports = {
     editarUsuario,
     eliminarUsuario,
     verUsuario,
-    listarUsuarios
+    listarUsuarios,
+    registrarAdmin
 }

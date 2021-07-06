@@ -1,34 +1,255 @@
-<br>  <body>
-    <div class="container">
-      <div class="table-wrapper">
-        <div class="table-title">
-          <div class="row">
-            <div class="col-sm-6">
-              <h2>Usuarios</h2>
-            </div>
-            <div class="col-sm-6">
-              <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar usuario</span></a>
-            </div>
+<br>
+
+<body>
+  <div class="container">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Usuarios</h2>
+          </div>
+          <div class="col-sm-6">
+            <a class="btn btn-success" data-toggle="modal" data-bs-toggle="modal" data-bs-target="#Administrador"><i
+                class="material-icons">&#xE147;</i><span>Administrador</span></a>
           </div>
         </div>
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Usuario</th>
-              <th>Dirección</th>
-              <th>Teléfono</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let u of usuarios" >
-              <td>{{u.nombre+'_'+u.apellido}}</td>
-              <td>{{u.usuario}}</td>
-              <td>{{u.direccion}}</td>
-              <td>{{u.telefono}}</td>
-              <td>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-              </td>
-            </tr>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Usuario</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of usuarios">
+            <td class="name"><button *ngIf="u.rol == 'ROL_ADMIN'" class="buttonAdmin star" type="button" disabled><i class="material-icons" style="font-size: 12px" data-toggle="tooltip"
+              title="Delete">&#xf0ec;</i></button> <button *ngIf="u.rol != 'ROL_ADMIN'" class="buttonAdmin" type="button" disabled><i class="material-icons" style="font-size: 12px" data-toggle="tooltip"
+                title="Delete">&#xe851;</i></button> {{u.nombre+' '+u.apellido}}</td>
+            <td>{{u.usuario}}</td>
+            <td>{{u.direccion}}</td>
+            <td>{{u.telefono}}</td>
+            <td class="actions">
+              <div *ngIf="u.rol != 'ROL_ADMIN'">
+                <button type="button" class="see buttonEdit" data-bs-toggle="modal" data-bs-target="#ver"
+                  (click)="verUsuario(u._id)"><i class="material-icons" data-toggle="tooltip"
+                    title="See">&#xe8f4;</i></button>
+                <button type="button" class="edit buttonEdit" data-bs-toggle="modal" data-bs-target="#editar"
+                  (click)="verUsuario(u._id)"><i class="material-icons" data-toggle="tooltip"
+                    title="Edit">&#xE254;</i></button>
+                <button type="button" class="delete buttonEdit" data-bs-toggle="modal" data-bs-target="#eliminar"
+                  (click)="verUsuario(u._id)"><i class="material-icons" data-toggle="tooltip"
+                    title="Delete">&#xE872;</i></button>
+              </div>
+              <div *ngIf="u.rol == 'ROL_ADMIN'">
+                <button class="buttonAdmin" type="button" disabled><i class="material-icons" data-toggle="tooltip"
+                    title="See">&#xe8f4;</i></button>
+                <button class="buttonAdmin" type="button" disabled><i class="material-icons" data-toggle="tooltip"
+                    title="Ed8it">&#xE254;</i></button>
+                <button class="buttonAdmin" type="button" disabled><i class="material-icons" data-toggle="tooltip"
+                    title="Delete">&#xE872;</i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+<!-- Modal para Editar Usuario -->
+<div class="modal fade" id="editar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Editar usuario</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="firstname" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel"
+              [(ngModel)]="idUsuarioModal.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" #apellido="ngModel"
+              [(ngModel)]="idUsuarioModal.apellido">
+          </div>
+          <div class="mb-3">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="usuario" name="usuario" #usuario="ngModel"
+              [(ngModel)]="idUsuarioModal.usuario">
+          </div>
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" #direccion="ngModel"
+              [(ngModel)]="idUsuarioModal.direccion">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Teléfono</label>
+            <input type="email" class="form-control" id="telefono" name="telefono" #telefono="ngModel"
+              [(ngModel)]="idUsuarioModal.telefono">
+          </div>
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="correo" name="correo" #correo="ngModel"
+              [(ngModel)]="idUsuarioModal.correo">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Tipo de Usuario</label>
+            <select class="form-select" id="rol" name="rol" #rol="ngModel" [(ngModel)]="idUsuarioModal.rol">
+              <option value="ROL_ADMIN">Administrador</option>
+              <option value="ROL_USUARIO">Usuario</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="imagen" name="imagen" #imagen="ngModel"
+              [(ngModel)]="idUsuarioModal.imagen">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarUsuario()">Guardar
+          cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para ver Usuario -->
+<div class="modal fade" id="ver" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Usuario {{idUsuarioModal.usuario}}</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="name" name="name" #name="ngModel"
+              [(ngModel)]="idUsuarioModal.nombre" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="lastname" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" #lastname="ngModel"
+              [(ngModel)]="idUsuarioModal.apellido" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="user" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="user" name="username" #username="ngModel"
+              [(ngModel)]="idUsuarioModal.usuario" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="address" name="address" #address="ngModel"
+              [(ngModel)]="idUsuarioModal.direccion" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="phone" name="phone" #phone="ngModel"
+              [(ngModel)]="idUsuarioModal.telefono" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="email" name="email" #email="ngModel"
+              [(ngModel)]="idUsuarioModal.correo" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Tipo de Usuario</label>
+            <input type="email" class="form-control" id="rol" name="rol" #rol="ngModel" [(ngModel)]="idUsuarioModal.rol"
+              disabled>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="imagen" name="imagen" #imagen="ngModel"
+              [(ngModel)]="idUsuarioModal.imagen" disabled>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Eliminar Usuario -->
+<div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Eliminar "{{idUsuarioModal.usuario}}"</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que quiere eliminar el registro?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+          (click)="eliminarUsuario(idUsuarioModal._id)">Sí, elimínalo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para agregar administrador -->
+<div class="modal fade" id="Administrador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Crear cuenta</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nombres" name="nombre" #nombre="ngModel"
+              [(ngModel)]="idUsuarioModal.nombre">
+            <input type="text" class="form-control" placeholder="Apellidos" name="apellido"
+              #apellido="ngModel" [(ngModel)]="idUsuarioModal.apellido">
+          </div>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Usuario" name="usuario" #usuario="ngModel"
+              [(ngModel)]="idUsuarioModal.usuario">
+            <input type="password" class="form-control" placeholder="Contraseña" name="password"
+              #password="ngModel" [(ngModel)]="idUsuarioModal.password">
+          </div>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Teléfono" name="telefono"
+              #telefono="ngModel" [(ngModel)]="idUsuarioModal.telefono">
+            <input type="email" class="form-control" placeholder="Correo" name="correo" #correo="ngModel"
+              [(ngModel)]="idUsuarioModal.correo">
+          </div>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Dirección" name="direccion"
+              #direccion="ngModel" [(ngModel)]="idUsuarioModal.direccion">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-text" id="spanImagen">Imagen</span>
+            <textarea class="form-control" aria-label="With textarea" name="imagen" #imagen="ngModel"
+              [(ngModel)]="idUsuarioModal.imagen"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+          (click)="registroAdmin()">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>

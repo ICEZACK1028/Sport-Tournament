@@ -65,11 +65,21 @@ function obtenerLigaId(req,res){
     })
 }
 
+function obtenerLigasAll(req,res){
+    var idUsuario = req.user.sub
+    ligaModel.find().populate('usuario').exec((err, ligasEncontradas)=> {
+        if (err) return res.status(500).send({ mensaje: 'Error al leer las ligas' })
+        if (!ligasEncontradas) return res.status(200).send({mensaje: 'Aún no se agregan ligas'})
+        
+        return res.status(200).send({ligasEncontradas})
+    })
+}
 
 module.exports = {
     obtenerLigas,
     registrarLiga,
     editarLiga,
     eliminarLiga,
-    obtenerLigaId
+    obtenerLigaId,
+    obtenerLigasAll
 }
