@@ -31,7 +31,7 @@ export class UsuarioService {
   }
 
   getIdentidad(){
-    var identidad2 = JSON.parse(localStorage.getItem('identidad'))
+    var identidad2 = JSON.parse(sessionStorage.getItem('identidad'))
     if (identidad2 != 'undefined'){
       this.identidad = identidad2
     }else{
@@ -41,7 +41,7 @@ export class UsuarioService {
   }
 
   getToken(){
-    var token2 = localStorage.getItem('token')
+    var token2 = sessionStorage.getItem('token')
     if (token2 != 'undefined'){
       this.token = token2
     }else{
