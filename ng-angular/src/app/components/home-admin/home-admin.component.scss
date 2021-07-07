@@ -7,17 +7,23 @@
 
 button{
   padding: 80px 150px 80px 150px;
+  color: #fff;
   font-size: 30px;
-  background-color: #E85D2C;
+  background-color: #DC3545;
   border: none;
+  border-radius: 10%;
 }
 
 button:hover {
-  background-color: #F52234;
+  color: #fff;
+  opacity: 0.80;
+  -moz-opacity: .50;
+  filter: alpha(opacity=50);
 }
 
-.right-col {
-  margin-right: -100px;
+.col {
+  margin-right: 60px;
+  margin-bottom: 50px;
 }
 
 #button {
