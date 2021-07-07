@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var JornadaSchema = Schema({
     nombre: String,
+    numero: Number,
     liga: { type: Schema.Types.ObjectId, ref: 'ligas'},
     games: [{
         equipo1: { type: Schema.Types.ObjectId, ref: 'equipo'},
