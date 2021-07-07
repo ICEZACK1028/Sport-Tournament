@@ -65,38 +65,124 @@ function crearJornada(req, res) {
 // } 
 
 function iniciarLiga(req, res) {
-    var jornadaConstructor = new jornadaModel();
     var ligaId = req.params.ligaId;
+    var jornadaConstructor = new jornadaModel()
 
-    equipoModel.find({ ligaID: ligaId }, (err, equipoEncontrado) => {
+    var rondas
+
+    equipoModel.find({ ligaID: ligaId }, (err, equiposEncontrados) => {
         if(err) return res.status(500).send({ mensaje: 'Ha ocurrido un error' });
-        if(!equipoEncontrado) return res.status(500).send({ mensaje: 'No se han encontrado equipos' });
-
-        var numJornadas = equipoEncontrado.length - 1;
-        var numPartidoPorJornada = (equipoEncontrado.length / 2);
-
+        if(!equiposEncontrados) return res.status(500).send({ mensaje: 'No se han encontrado equipos' });
         
+        var numEquipos = equiposEncontrados.length
+        var numJornadas = equiposEncontrados.length - 1;
+        var numPartidoPorJornada = (equiposEncontrados.length / 2);
 
-        // jornadaConstructor.numero = i + 1
-        for (let i = 0; i < numJornadas; i++) {
-            jornadaConstructor.nombre = "";
-            jornadaConstructor.liga = "";
-            jornadaConstructor.games = [];
-            
-            jornadaConstructor.save((err, jornadaGuardada) => {
-                return console.log(err)
-                if (err) return res.status(200).send({ mensaje: 'Error al guardar jornada' })
-                if (!jornadaGuardada) return res.status(200).send({ mensaje: 'Jornada Vacia' })
+        rondas = create2DArray(numJornadas,numPartidoPorJornada)
+//---------------------------------FASE 1---------------------------------//
+        for (let i = 0, k = 0; i < numJornadas; i ++){
+            for (let j = 0; j < numPartidoPorJornada; j ++){
 
-                res.status(200).send({ jornadaGuardada })
-                // for (let j = 0; j < array.length; j++) {
-                // }
-            })
+                var stringTemporal = String(k)
+                // console.log(stringTemporal);
+                rondas[i][j] = stringTemporal
+                // rondas[i][j] = k
+
+                // jornadaModel.findOneAndUpdate({numero: i+1},
+                // { $push:{ games: {equipo1: equiposEncontrados[j]._id, goles1: 0}}},
+                // {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { })
+                
+                k ++;
+                if (k == numJornadas)
+                    k = 0;
+            }
         }
+        console.log(rondas);
+
+//---------------------------------FASE 2---------------------------------//
+        for (let i = 0; i < numJornadas; i ++){
+           if (i % 2 == 0){
+
+               var stringTemporal2 = rondas[i][0] + " - " + String(numEquipos -1)
+               rondas[i][0]= stringTemporal2;
+
+                console.log(equiposEncontrados[i]._id);
+
+               jornadaModel.findOneAndUpdate({"games._id": equiposEncontrados[i]._id},
+                { "games.$.equipo2": equiposEncontrados[numEquipos-1]._id, "games.$.goles2": 0},
+                {new:true, useFindAndModify: false},
+                (err, jornadaFase2Add) => {
+                    console.log(jornadaFase2Add);
+                })
+               
+
+            //    rondas[i][0]= numEquipos - 1;
+           }else{  //----------------------------------else-------------------------
+
+            var stringTemporal3 = rondas[i][0] + " - " + String(numEquipos -1)
+            jornadaModel.findOneAndUpdate({numero: i},
+                { "games.$.equipo2": equiposEncontrados[numEquipos-1]._id, "games.$.goles2": 0},
+                {new:true, useFindAndModify: false},(err, jornadaFase2Add) => {
+                    console.log(jornadaFase2Add);
+                })
+            
+               rondas[i][0] = stringTemporal3;
+           }
+       }
+       console.log(rondas);
+
+//---------------------------------FASE 3---------------------------------//
+
+       var equipoMasAlto = numEquipos - 1;
+       var equipoImparMasAlto = equipoMasAlto - 1; 
+
+       for (let i = 0, k = equipoImparMasAlto; i < numJornadas; i ++){
+           for (let j = 1; j < numPartidoPorJornada; j ++){
+
+                let stringTemporal = String(k)
+                // console.log(stringTemporal);
+                rondas[i][j] =  rondas [i][j] +' - '+ stringTemporal
+
+            //    rondas[i][j] = k;
+               k --;
+               if (k == -1)
+                   k = equipoImparMasAlto;
+           }
+       }
+
+    for (let i = 0, k = 0; i < numJornadas; i ++){
+           
+    for (let j = 0; j < numPartidoPorJornada; j ++){
+
+
+
+        // console.log(Number(rondas[i][j].substring(0,1)));
+        var equipoIndex = Number(rondas[i][j].substring(0,1))
+        // console.log(equiposEncontrados[equipoIndex].nombre);
+
+        jornadaModel.find
+
+
+        k ++;
+        if (k == numJornadas)
+        k = 0;
+        }
+    }
+
+       console.log(rondas);
+        return res.status(200).send(rondas)
     })
-
-
 }
+
+function create2DArray(filas,columnas) {
+    var x = new Array(filas);
+    for (var i = 0; i < filas; i++) {
+        x[i] = new Array(columnas);
+    }
+    return x;
+ }
+
+//  function prueba()
 
 module.exports = {
     crearJornada,

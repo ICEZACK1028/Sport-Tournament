@@ -1,6 +1,7 @@
 'use strict'
 const equipoModel = require('../models/equipo.model');
-const { param } = require('../routes/equipo.routes');
+const jornadaModel = require('../models/jornada.model');
+// const { param } = require('../routes/equipo.routes');
 
 function registrarEquipo(req, res){
     var equipo = new equipoModel()
@@ -19,15 +20,38 @@ function registrarEquipo(req, res){
     equipo.PT = 0;
     equipo.ligaID = ligaID;
 
-    equipoModel.findOne({nombre: params.nombre}, (err, encontrarEquipo) =>{
-        if (err) return res.status(404).send({ mensaje: 'Error al guardar equipo'})
-        if (encontrarEquipo) return res.status(404).send({mensaje: 'Este equipo ya existe'})
+    equipoModel.find({ligaID: ligaID},(err, equiposEncontrados) => {
+        if (err) return res.status(404).send({ mensaje: 'Error al buscar equipo'})
+        if (!equiposEncontrados) return res.status(404).send({mensaje: '!Equipos'})
+        // console.log(equiposEncontrados);
 
-        equipo.save((err, guardarEquipo) => {
-            if (err) return res.status(404).send({ mensaje: 'Error al guardar'})
-            return res.status(200).send({guardarEquipo})
+        equipoModel.findOne({nombre: params.nombre, ligaID: ligaID}, (err, encontrarEquipo) =>{
+            if (err) return res.status(404).send({ mensaje: 'Error al guardar equipo'})
+            if (encontrarEquipo) return res.status(404).send({mensaje: 'Este equipo ya existe'})
+
+            equipo.save((err, guardarEquipo) => {
+                if (err) return res.status(404).send({ mensaje: 'Error al guardar'})
+                console.log(equiposEncontrados.length);
+                if (equiposEncontrados.length >= 1 ){
+                    crearJornada(guardarEquipo.ligaID,equiposEncontrados.length)
+                }
+                
+                return res.status(200).send({guardarEquipo})
+            })
         })
     })
+        
+}
+
+function crearJornada(ligaId, cantidadEquipos){
+
+    var jornadaConstructor = new jornadaModel()
+    jornadaConstructor.numero = cantidadEquipos;
+    jornadaConstructor.nombre = "Jornada "+jornadaConstructor.numero;
+    jornadaConstructor.liga = ligaId;
+    jornadaConstructor.games = []
+
+    jornadaConstructor.save()
 }
 
 function editarEquipo(req, res){
