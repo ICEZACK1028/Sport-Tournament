@@ -12,13 +12,13 @@ export class NavbarComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit(): void {
-    this.identidad = localStorage.getItem('identidad')
+    this.identidad = sessionStorage.getItem('identidad')
     this.identidad = JSON.parse(this.identidad)
     console.log(this.identidad);
   }
 
   cerrarSesion(){
-    localStorage.clear()
+    sessionStorage.clear()
     // this._router.navigate(['/login'])
   }
 }

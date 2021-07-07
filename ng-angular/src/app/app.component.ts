@@ -11,7 +11,7 @@ export class AppComponent {
   constructor() { }
 
   usuarioLogueado(){
-    if(JSON.parse(localStorage.getItem('identidad')) == null){
+    if(JSON.parse(sessionStorage.getItem('identidad')) == null){
       return false
     }else{
       return true
