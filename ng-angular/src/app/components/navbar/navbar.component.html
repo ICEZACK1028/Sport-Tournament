@@ -12,11 +12,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <!-- <li class="nav-item">
-          <a class="nav-link" aria-current="page" routerLink="/home"  routerLinkActive="active-link" *ngIf="identidad.rol == 'ROL_USUARIO'">Home</a>        
-          <a class="nav-link" aria-current="page" routerLink="/home-admin"  routerLinkActive="active-link"   *ngIf="identidad.rol == 'ROL_ADMIN'">Home</a>        
+          <a class="nav-link" aria-current="page" routerLink="/home"  routerLinkActive="active-link" *ngIf="identidad.rol == 'ROL_USUARIO'">Home</a>
+          <a class="nav-link" aria-current="page" routerLink="/home-admin"  routerLinkActive="active-link"   *ngIf="identidad.rol == 'ROL_ADMIN'">Home</a>
         </li> -->
         <li class="nav-item"  routerLinkActive="activo" *ngIf="identidad.rol == 'ROL_ADMIN'">
-          <a class="nav-link" routerLink="/home" >Ver Ligas Propias</a>
+          <a class="nav-link" routerLink="/home" >Mis ligas</a>
         </li>
         <li class="nav-item"  routerLinkActive="activo" *ngIf="identidad.rol == 'ROL_ADMIN'">
           <a class="nav-link" routerLink="/usuarios" >Usuarios</a>
@@ -38,12 +38,12 @@
       </ul>
 
       <div class="d-flex" >
-        
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" > 
-          
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+
           <li class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-            
+
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
             <li><a class="dropdown-item" href="#">Perfil</a></li>
             <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
@@ -58,7 +58,7 @@
         *ngIf="identidad">
 
       </div>
-      
+
 
     </div>
   </div>
