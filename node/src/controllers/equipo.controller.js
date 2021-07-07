@@ -65,7 +65,16 @@ function obtenerEquipos(req,res){
     equipoModel.find((err, encontrarEquipos)=>{
         if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
         if(!encontrarEquipos) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
-        return res.status(200).send({ mensaje:'Equipos Registrados', encontrarUsuario})
+        return res.status(200).send({ mensaje:'Equipos Registrados', encontrarEquipos})
+    })
+}
+
+function obtenerEquiposLiga(req, res){
+    var ligaID = req.params.ligaID
+    equiposModel.find({ligaID:ligaID}, (err, encontrarEquipos)=>{
+        if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
+        if(!encontrarEquipos) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
+        return res.status(200).send({ mensaje:'Equipos Registrados', encontrarEquipos})
     })
 }
 
@@ -74,5 +83,6 @@ module.exports = {
     editarEquipo,
     eliminarEquipo,
     obtenerEquipoID,
-    obtenerEquipos
+    obtenerEquipos,
+    obtenerEquiposLiga
 }

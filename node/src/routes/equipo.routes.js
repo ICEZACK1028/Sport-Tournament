@@ -9,5 +9,6 @@ api.put('/editarEquipo/:equipoID', md_autenticacion.ensureAuth, equipoController
 api.post('/registrarEquipo/:ligaID',  equipoController.registrarEquipo);
 api.get('/obtenerEquipoID/:equipoID', md_autenticacion.ensureAuth, equipoController.obtenerEquipoID);
 api.get('/obtenerEquipos', equipoController.obtenerEquipos);
+api.get('/obtenerEquiposLiga/:ligaID', md_autenticacion.ensureAuth, equipoController.obtenerEquiposLiga)
 api.delete('/eliminarEquipo/:equipoID', md_autenticacion.ensureAuth, equipoController.eliminarEquipo);
 module.exports = api

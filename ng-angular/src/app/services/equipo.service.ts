@@ -22,4 +22,26 @@ export class EquipoService {
         return this._http.post(this.url+'/registrarEquipo', params,{headers:headersToken})
     }
 
+    obtenerEquipos(token): Observable<any>{
+        let headersToken = this.headers.set('Authorization', token)
+        return this._http.get(this.url+'/obtenerEquipos', {headers:headersToken})
+    }
+
+    obtenerEquiposLiga(ligaID:String): Observable<any>{
+        let headersToken = this.headers.set('Authorization', this.token)
+        return this._http.get(this.url + '/obtenerEquiposLiga' + ligaID, {headers: headersToken})
+    }
+
+    editarEquipo(equipo, equipoID:String): Observable<any>{
+        let headersToken = this.headers.set('Authorization', this.token)
+        let params = JSON.stringify(equipo)
+        return this._http.put(this.url+'/editarEquipo'+ equipoID,params,{headers:headersToken})
+    }
+
+    eliminarEquipo(equipoID, token): Observable<any>{
+        let headersToken = this.headers.set('Authorization', token)
+        return this._http.delete(this.url+'eliminarEquipo'+equipoID,{headers:headersToken})
+    }
 }
+
+
