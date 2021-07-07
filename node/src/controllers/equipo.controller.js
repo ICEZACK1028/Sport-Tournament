@@ -1,5 +1,6 @@
 'use strict'
 const equipoModel = require('../models/equipo.model');
+const { param } = require('../routes/equipo.routes');
 
 function registrarEquipo(req, res){
     var equipo = new equipoModel()
@@ -30,18 +31,48 @@ function registrarEquipo(req, res){
 }
 
 function editarEquipo(req, res){
+    var params = req.body
+    var equipoID = req.params.equipoID
 
+    equipoModel.findOneAndUpdate({_id: equipoID}, {nombre: params.nombre, imagen: params.imagen},
+     {new: true, useFindAndModify: false}, (err, equipoActualizado) => {
+         if (err) return res.status(200).send({mensaje: 'Error al actualizar el equipo'})
+         return res.status(200).send({equipoActualizado})
+     }   
+        )
 }
 
 function eliminarEquipo(req, res){
+    var equipoID = req.params.equipoID
+
+    equipoModel.findOneAndDelete({_id: equipoID}, (err, equipoEliminado) =>{
+        if (err) return res.status(404).send({mensaje: 'Error al eliminar el equipo'})
+        return res.status(200).send({mensaje:'El equipo se ha eliminado con éxito'})
+    })
+}
+
+function obtenerEquipoID(req, res){
+    var equipoID = req.params.equipoID
+    equipoModel.findById(equipoID, (err, equipoEncontrado)=>{
+        if(err) return res.status(404).send({mensaje: 'Error al obtener los equipos'})
+        if (!equipoEncontrado) return res.status(500).send({ mensaje: 'Error en obtener los datos' })
+        return res.status(200).send({equipoEncontrado})
+    })
 
 }
 
-function obtenerEquipo(req, res){
-
+function obtenerEquipos(req,res){
+    equipoModel.find((err, encontrarEquipos)=>{
+        if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
+        if(!encontrarEquipos) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
+        return res.status(200).send({ mensaje:'Equipos Registrados', encontrarUsuario})
+    })
 }
-
 
 module.exports = {
-    registrarEquipo
+    registrarEquipo,
+    editarEquipo,
+    eliminarEquipo,
+    obtenerEquipoID,
+    obtenerEquipos
 }
