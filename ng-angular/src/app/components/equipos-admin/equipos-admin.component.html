@@ -23,13 +23,13 @@
             </tr>
           </thead>
           <tbody>            
-                <tr *ngFor="let Equ of Equipo">
-                    <td><img src="{{Equ.imagen}}" style="height: 30px;"></td>
-                    <td>{{Equ.nombre}}</td>
-                    <td>{{Equ.ligaID}}</td>
+                <tr *ngFor="let eq of equipoModelGet">
+                    <td><img src="{{eq.imagen}}" style="height: 30px;"></td>
+                    <td>{{eq.nombre}}</td>
+                    <td>{{eq.ligaID}}</td>
                     <td>
-                      <a class="edit" data-bs-toggle="modal" data-bs-target="#editLiga" (click)="obtenerIdEquipo(Equ._id)"><i class="material-icons" data-toggle="tooltip" title="Edit" style="cursor:pointer">&#xE254;</i></a>
-                      <a class="delete" data-bs-toggle="modal" data-bs-target="#deleteLiga" (click)="obtenerIdEquipo(Equ._id)" ><i class="material-icons" data-toggle="tooltip" title="Delete" style="cursor:pointer">&#xE872;</i></a>
+                      <a class="edit" data-bs-toggle="modal" data-bs-target="#editLiga" (click)="obtenerEquipoId(eq._id)"><i class="material-icons" data-toggle="tooltip" title="Edit" style="cursor:pointer">&#xE254;</i></a>
+                      <a class="delete" data-bs-toggle="modal" data-bs-target="#deleteLiga" (click)="obtenerEquipoId(eq._id)" ><i class="material-icons" data-toggle="tooltip" title="Delete" style="cursor:pointer">&#xE872;</i></a>
                     </td>
                   </tr>         
           </tbody>
@@ -37,7 +37,8 @@
       </div>
     </div>
  </body>
-            
+
+        
 
 <!-- Modal registrar -->
 <div class="modal fade" id="addLiga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -47,21 +48,28 @@
         <h5 class="modal-title" id="exampleModalLabel">Agregar Equipo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" >
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombre" name="nombre"  (ngModel)="equipoModel.nombre">x
-          <label for="imagen" class="form-label">Imagen</label>
-          <input type="text" class="form-control" name="imagen"  (ngModel)="equipoModel.imagen">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='registrarEquipo()'>Guardar</button>
-      </div>
+      <form>
+        <div class="modal-body" >
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelAdd.nombre">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelAdd.imagen">
+            <label for="imagen" class="form-label">Liga</label>
+            
+            <select class="form-control"  id="LigaID" name="LigaID" #LigaID="ngModel" [(ngModel)]="idLiga">
+              <option *ngFor="let li of ligasUsuario; let i = index;" value={{li._id}} >{{li.nombre}} {{li._id}}</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='registrarEquipo()'>Guardar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>  
 
-                <!-- Modal editar -->
+<!-- Modal editar -->
     <div class="modal fade" id="editLiga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -71,9 +79,9 @@
           </div>
           <div class="modal-body">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre"  (ngModel)="equipoModel.nombre">
+              <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelId.nombre" >
               <label for="imagen" class="form-label">Imágen</label>
-              <input type="text" class="form-control" id="imagen" name="imagen" (ngModel)="equipoModel.imagen">
+              <input type="text" class="form-control" id='imagen'name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelId.imagen" >
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -83,31 +91,7 @@
       </div>
     </div>
 
-
-        <!-- Modal editar -->
-        <div class="modal fade" id="editLiga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Equipo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <label for="nombre" class="form-label">Nombre</label>
-                  <input type="text" class="form-control"  (ngModel)="equipoModel.nombre">
-        
-                  <label for="imagen" class="form-label">Imágen</label>
-                  <input type="text" class="form-control" id="imagen"  (ngModel)="equipoModel.imagen">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='editarEquipo()'>Editar </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-              <!-- Modal deleteLiga -->
+ <!-- Modal deleteLiga -->
 
     <div class="modal fade" id="deleteLiga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">

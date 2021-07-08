@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt-nodejs')
 const Usuario = require('./src/models/usuario.model')
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://admin:admin@cluster0.9tm3d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+mongoose.connect('mongodb+srv://Admin:<Deportes123>@cluster0.mtuzx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
 
     console.log('Conectado a la base de datos Sport Tournament');
     app.listen(process.env.PORT || 3000, function() {

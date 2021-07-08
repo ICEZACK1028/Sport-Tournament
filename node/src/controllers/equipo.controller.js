@@ -118,10 +118,10 @@ function obtenerEquipoID(req, res){
 }
 
 function obtenerEquipos(req,res){
-    equipoModel.find((err, encontrarEquipos)=>{
+    equipoModel.find({},(err, encontrarEquipos)=>{
         if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
         if(!encontrarEquipos) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
-        return res.status(200).send({ mensaje:'Equipos Registrados', encontrarEquipos})
+        return res.status(200).send({encontrarEquipos})
     })
 }
 

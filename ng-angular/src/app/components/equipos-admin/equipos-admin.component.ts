@@ -1,110 +1,106 @@
 import { Component, OnInit } from '@angular/core';
 import { Equipo } from 'src/app/models/equipo.model';
-import { ActivatedRoute } from '@angular/router';
 import { LigaService } from 'src/app/services/liga.service';
 import { EquipoService } from 'src/app/services/equipo.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { JornadaService } from 'src/app/services/jornada.service';
 import Swal from 'sweetalert2';
+import { Liga } from 'src/app/models/liga.model';
 
 @Component({
   selector: 'app-equipos-admin',
   templateUrl: './equipos-admin.component.html',
   styleUrls: ['./equipos-admin.component.scss'],
-  providers:[LigaService,EquipoService]
+  providers:[LigaService,EquipoService,UsuarioService]
 })
 
 export class EquiposAdminComponent implements OnInit {
   public token
-  public equipoID
-  public equipoModel
-
-  public equiposLiga
-  public ligaModel
-
-  public ligaID
-  public equipos
-  public idLiga
   public idEquipo
-  public equipoModelId
-  public equipoModelGet
   public equipoModelAdd
-  public obtenerEquiposLiga
- 
+  public equipoModelGet
+  public equipoModelEdit
+  public equipoModelId
+  public ligasUsuario 
+  public idLiga
 
-  constructor(private _usuarioService: UsuarioService, private _equipoService: EquipoService) { 
-     this.equipoModel = new Equipo("","","",0,0,0,0,0,0,0,0,"")
-
-
+  constructor(public _usuarioService: UsuarioService, public _equipoService: EquipoService, public _ligaService: LigaService) { 
+    this.equipoModelAdd = new Equipo('','','',0,0,0,0,0,0,0,0,'')
+    this.equipoModelGet = new Equipo('','','',0,0,0,0,0,0,0,0,'')
+    this.equipoModelId = new Equipo('','','',0,0,0,0,0,0,0,0,'')
+    this.equipoModelEdit = new Equipo('','','',0,0,0,0,0,0,0,0,'')
+    this.ligasUsuario = new Liga('','','','','')
   }
 
   ngOnInit(): void {
     this.token = this._usuarioService.getToken()
+    console.log(this.token);
     this.obtenerEquipos()
+    this.obtenerLigasUsuario()
   }
 
-
-  eliminarEquipo() {
-    this._equipoService.eliminarEquipo(this.equipoID, this.token).subscribe(
-      Response => {
-        console.log(Response);
-        this.obtenerEquiposLiga()
+  obtenerEquipos(){
+    this._equipoService.obtenerEquipos(this.token).subscribe(
+      response => {
+        this.equipoModelGet = response.encontrarEquipos
+        console.log(this.equipoModelGet);
       }
     )
   }
 
-  obtenerIdEquipo(idEquipo){
+  obtenerEquipoId(idEquipo){
     this._equipoService.obtenerEquipoId(idEquipo).subscribe(
       response => {
-        this.equipoModel = response.equipoEncontrado
-        this.idEquipo = idEquipo
-        console.log(response);
+        this.equipoModelId = response.equipoEncontrado
+        this.idEquipo = this.equipoModelId._id
+        console.log(this.equipoModelId);
       }
     )
   }
 
-
-  editarEquipo() {
-    console.log(this.equipoID);
-    console.log(this.equipoModelId);
-    this._equipoService.editarEquipo(this.equipoModelId, this.equipoID, this.token).subscribe(
-      response => {
-        console.log(response);
-        this.obtenerEquiposLiga()
-      }
-    )
-  }
-
-  registrarEquipo() {
-    this._equipoService.registrarEquipo(this.equipoModelAdd, this.token, this.ligaID).subscribe(
+  registrarEquipo(){
+    console.log(this.idLiga);
+    console.log(this.equipoModelAdd)
+    this._equipoService.registrarEquipo(this.equipoModelAdd,this.token,this.idLiga).subscribe(
       response => {
         console.log(response);
         this.obtenerEquipos()
-        this.equipoModelAdd.nombre = ""
-        this.equipoModelAdd.imagen = ""
-      },
-      (error) =>{
-        console.log(error);
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'No pueden haber mas de 10 equipos',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        
       }
     )
   }
 
-  obtenerEquipos() {
-    this._equipoService.obtenerEquipos(this.token).subscribe(
-      Response => {
-        this.equipoModel = Response.encontrarEquipos
-        console.log(this.equipoModel);
+  editarEquipo(){
+    this._equipoService.editarEquipo(this.equipoModelId,this.idEquipo,this.token).subscribe(
+      response => {
+        console.log(response);
+        this.equipoModelId = response.equipoActualizado
+        this.obtenerEquipos()
       }
     )
   }
 
+  eliminarEquipo(){
+    this._equipoService.eliminarEquipo(this.idEquipo, this.token).subscribe(
+      response => {
+        console.log('Se ha eliminado el equipo');
+        this.obtenerEquipos()
+      }
+    )
+
+  }
+
+  obtenerLigasUsuario(){
+    this._ligaService.obtenerLigas(this.token).subscribe(
+      response => {
+        this.ligasUsuario = response.ligasEncontradas
+        console.log(this.ligasUsuario);
+      }
+    )
+  }
+
+  obtenerIdLiga(idLiga){
+    this.idLiga = idLiga
+  } 
 
 }
+

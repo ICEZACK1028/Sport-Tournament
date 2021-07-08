@@ -14,6 +14,9 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { EquiposComponent } from './components/equipos/equipos.component';
 import { LigasAdminComponent } from './components/ligas-admin/ligas-admin.component';
 import { TableViewComponent } from './components/table-view/table-view.component';
+import { EquiposAdminComponent } from './components/equipos-admin/equipos-admin.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { TableViewComponent } from './components/table-view/table-view.component
     EquiposComponent,
     LigasAdminComponent,
     TableViewComponent,
+    EquiposAdminComponent
   ],
   imports: [
     BrowserModule,
