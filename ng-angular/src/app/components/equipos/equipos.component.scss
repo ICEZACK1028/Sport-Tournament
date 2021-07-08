@@ -17,12 +17,12 @@ body{
 
 .title{
   text-align: center;
-  font-size: 40px;
-  color: #6a6a6a;
+  font-size: 48px;
+  color: #000;
   margin-top: 30px;
   margin-bottom: 10px;
   font-weight: 100;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .container{
@@ -84,7 +84,6 @@ body{
 }
 
 #button {
-    margin: 0;
 	border-radius: 20px;
 	border: 1px solid #f26750;
 	background-color: #f26750;
@@ -97,3 +96,15 @@ body{
 	transition: transform 80ms ease-in;
     margin: 50px;
 }
+
+button {
+    margin-right: 10px;
+    background-color: #DC3545;
+    color: #FFFFFF;
+    border: #DC3545;
+}
+
+#buttons_row {
+  margin-left: 60px;
+}
+
