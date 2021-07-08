@@ -67,7 +67,14 @@ export class EquiposComponent implements OnInit {
   }
 
   editarEquipo() {
-
+    console.log(this.equipoID);
+    console.log(this.equipoModelId);
+    this._equipoService.editarEquipo(this.equipoModelId,this.equipoID,this.token).subscribe(
+      response => {
+        console.log(response);
+        this.obtenerEquiposLiga()
+      }
+    )
   }
 
   registrarEquipo() {
@@ -101,6 +108,7 @@ export class EquiposComponent implements OnInit {
     this._equipoService.obtenerEquipoId(this.token, idEquipo).subscribe(
       response => {
         this.equipoModelId = response.equipoEncontrado
+        this.equipoID = idEquipo
         console.log(response);
       }
     )
@@ -113,5 +121,6 @@ export class EquiposComponent implements OnInit {
       }
     )
   }
+  
 
 }
