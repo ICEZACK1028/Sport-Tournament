@@ -22,9 +22,9 @@ function registrarEquipo(req, res){
     equipo.ligaID = ligaID;
 
     equipoModel.find({ligaID: ligaID},(err, equiposEncontrados) => {
-        if (equiposEncontrados.length >= 10){
-            return res.status(404).send({mensaje: 'Solo puedes ingresar 10 equipos'})
-        }
+        ///if (equiposEncontrados.length >= 10){
+           /// return res.status(404).send({mensaje: 'Solo puedes ingresar 10 equipos'})
+        ///}
         if (err) return res.status(404).send({ mensaje: 'Error al buscar equipo'})
         if (!equiposEncontrados) return res.status(404).send({mensaje: '!Equipos'})
         // console.log(equiposEncontrados);

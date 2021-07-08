@@ -70,7 +70,7 @@ export class TableViewComponent implements OnInit {
   }
 
   obtenerEquipoPorId(idEquipo) {
-    this._equipoService.obtenerEquipoId(this.token, idEquipo).subscribe(
+    this._equipoService.obtenerEquipoId(idEquipo).subscribe(
       response => {
         this.equipoModel = response.equipoEncontrado
         console.log(response);

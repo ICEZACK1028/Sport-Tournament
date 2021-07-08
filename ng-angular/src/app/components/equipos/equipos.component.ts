@@ -121,7 +121,7 @@ export class EquiposComponent implements OnInit {
   }
 
   obtenerEquipoId(idEquipo) {
-    this._equipoService.obtenerEquipoId(this.token, idEquipo).subscribe(
+    this._equipoService.obtenerEquipoId(idEquipo).subscribe(
       response => {
         this.equipoModelId = response.equipoEncontrado
         this.equipoID = idEquipo

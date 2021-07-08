@@ -44,10 +44,10 @@ export class EquipoService {
         return this._http.delete(this.url+'/eliminarEquipo/'+equipoID,{headers:headersToken})
     }
 
-    obtenerEquipoId(token, idEquipo): Observable<any>{
-        let headersToken = this.headers.set('Authorization', token)
-        return this._http.get(this.url+'/obtenerEquipoId/'+idEquipo,{headers:headersToken})
+    obtenerEquipoId(id: String): Observable<any>{
+        return this._http.get(this.url+'/obtenerEquipoID/'+id,{headers: this.headers})
     }
+
 }
 
 
