@@ -10,7 +10,7 @@ function iniciarLiga(req, res) {
     var juegosNombres
     var rondas
     var goles
-    var participantes
+    var imagenes
 
     equipoModel.find({ ligaID: ligaId }, (err, equiposEncontrados) => {
         if (err) return res.status(500).send({ mensaje: 'Ha ocurrido un error' });
@@ -24,7 +24,7 @@ function iniciarLiga(req, res) {
         juegos = create2DArray(numJornadas,numPartidoPorJornada)
         juegosNombres = create2DArray(numJornadas,numPartidoPorJornada)
         goles = create2DArray(numJornadas,numPartidoPorJornada)
-        participantes = create2DArray(numEquipos,2)
+        imagenes = create2DArray(numEquipos,numPartidoPorJornada)
 
 //---------------------------------FASE 1---------------------------------//
         for (let i = 0, k = 0; i < numJornadas; i ++){
@@ -34,6 +34,7 @@ function iniciarLiga(req, res) {
                 juegos[i][j] = equiposEncontrados[k]._id
                 juegosNombres[i][j] = equiposEncontrados[k].nombre
                 goles[i][j] = Math.round(Math.random()*5)
+                imagenes[i][j] = equiposEncontrados[k].imagen
 
                 k ++;
                 if (k == numJornadas)
@@ -50,6 +51,7 @@ function iniciarLiga(req, res) {
             juegos[i][0] = juegos[i][0] + " - " + equiposEncontrados[numEquipos-1]._id 
             juegosNombres[i][0] = juegosNombres[i][0] + " - " + equiposEncontrados[numEquipos-1].nombre
             goles[i][0] = goles[i][0] + " - " + Math.round(Math.random()*5)
+            imagenes[i][0] = imagenes[i][0] + equiposEncontrados[numEquipos-1].imagen
        }
     //    console.log(rondas);
        console.log(goles);
@@ -66,6 +68,7 @@ function iniciarLiga(req, res) {
                 juegos[i][j] =  juegos [i][j] +' - '+ equiposEncontrados[k]._id
                 juegosNombres[i][j] =  juegosNombres [i][j] +' - '+ equiposEncontrados[k].nombre
                 goles[i][j] =  goles [i][j] +' - '+ Math.round(Math.random()*5)
+                imagenes[i][j] =  imagenes [i][j] + equiposEncontrados[k].imagen
 
                k --;
                if (k == -1)
@@ -96,6 +99,11 @@ console.log(goles);
             var goles2Array = goals.split(' ')
             var gol2 = Number(goles2Array[goles2Array.length - 1])
 
+            var imagenNombre = imagenes[i][j]
+            var imagen1 = imagenNombre.split(' - ')[0]
+            var imagen2Array = imagenNombre.split(' - ')
+            var imagen2 = imagen2Array[imagen2Array.length - 1]
+
             console.log('gol1');
             console.log(gol1);
             console.log('gol2');
@@ -109,8 +117,8 @@ console.log(goles);
 
 
             jornadaModel.findOneAndUpdate({numero: i+1},
-            { $push:{ games: {equipo1: equipo1,nombre1: nombre1, goles1: gol1,
-                              equipo2: equipo2,nombre2: nombre2, goles2: gol2}}},
+            { $push:{ games: {equipo1: equipo1,nombre1: nombre1, goles1: gol1,imagen1: imagen1,
+                              equipo2: equipo2,nombre2: nombre2, goles2: gol2, imagen2: imagen2}}},
             {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { 
 
                 // equipoModel.findByIdAndUpdate({_id: equipo1},{GF:})
@@ -124,6 +132,7 @@ console.log(goles);
         }   
     }
 
+    console.log(imagenes);
     // console.log(rondas);
     console.log(goles);
 

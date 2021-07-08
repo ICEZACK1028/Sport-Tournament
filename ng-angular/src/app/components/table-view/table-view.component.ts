@@ -7,11 +7,13 @@ import { LigaService } from 'src/app/services/liga.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute } from '@angular/router';
 import { TableViewService } from 'src/app/services/table-view.service';
+// import { EquiposComponent } from '../equipos/equipos.component';
 
 @Component({
   selector: 'app-table-view',
   templateUrl: './table-view.component.html',
-  styleUrls: ['./table-view.component.scss']
+  styleUrls: ['./table-view.component.scss'],
+  providers: [EquipoService,UsuarioService,LigaService]
 })
 export class TableViewComponent implements OnInit {
 
@@ -21,6 +23,7 @@ export class TableViewComponent implements OnInit {
   public equipoModel
   public ligaID
   public idLiga
+  // public partidos2 = EquiposComponent.partidos
 
   constructor(private _ligaService: LigaService,
     private _activatedRoute: ActivatedRoute,
@@ -46,6 +49,7 @@ export class TableViewComponent implements OnInit {
     })
     this.obtenerIdLiga(this.ligaID)
     this.obtenerJornadaPorLiga(this.ligaID)
+    // console.log( this.partidos2);
   }
 
   obtenerIdLiga(idLiga) {

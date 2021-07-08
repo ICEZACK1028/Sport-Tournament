@@ -3,8 +3,8 @@
 </div>
 <br>
 <div id="buttons_row">
-  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar
-    Equipo</button>
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar Equipo</button>
+  <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#partidoBtn">Partidos</button> -->
   <button type="button" class="btn btn-danger" [routerLink]="['/table-view', ligaID]" (click)="iniciarLiga()">Iniciar
     Liga</button>
   <button type="button" class="btn btn-danger">Graficas</button>
@@ -93,3 +93,37 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL PARTIDOS  -->
+
+<div class="modal fade" id="partidoBtn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Partidos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class='modal-body'>
+        <div class="container">
+          <div class="row" *ngFor="let pa of partidos">
+            <div class="col">
+              {{pa}}
+            </div>
+            <div class="col">
+              {{partidos[1]}}
+            </div>
+            <div class="col">
+              {{partidos}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='eliminarEquipo()'>Si </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

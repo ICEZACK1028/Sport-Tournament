@@ -27,6 +27,8 @@ export class EquiposComponent implements OnInit {
   public equipoModelId
   public equipoModelGet
   public equipoModelAdd
+  public partidos
+  static partidos: any;
 
   constructor(private _usuarioService: UsuarioService, private _equipoService: EquipoService,
     private _ligaService: LigaService, private _jornadaService: JornadaService, private _activatedRoute: ActivatedRoute) {
@@ -132,6 +134,7 @@ export class EquiposComponent implements OnInit {
     this._jornadaService.iniciarLiga(this.ligaID).subscribe(
       response => {
         console.log(response);
+        this.partidos = response.juegosNombres
       }
     )
   }
