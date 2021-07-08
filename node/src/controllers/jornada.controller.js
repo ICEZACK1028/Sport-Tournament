@@ -3,74 +3,9 @@ const jornadaModel = require('../models/jornada.model');
 const equipoModel = require('../models/equipo.model');
 
 function crearJornada(req, res) {
-    var jornadaConstructor = new jornadaModel();
     var ligaId = req.params.ligaId;
-    var params = req.body;
-
-    jornadaConstructor.nombre = params.nombre;
-    jornadaConstructor.liga = ligaId;
-    jornadaConstructor.games = [];
-
-    equipoModel.find({ ligaID: ligaId }, (err, equipoEncontrado) => {
-        if (err) return res.status(500).send({ mensaje: "Error al encontrar equipos" });
-        if (equipoEncontrado) {
-
-            for (var i = 0; i < equipoEncontrado.length; i++) {
-                for (let j = 0; j < equipoEncontrado.length; j++) {
-
-                    if (i != j) {
-                        if (i > j) {
-                            console.log(i + "  vs   " + j)
-                        }
-
-                    }
-
-                }
-            }
-        }
-
-        /* jornadaModel.find({nombre: params.nombre},(err,jornadaEncontrada) => {
-            console.log(jornadaEncontrada);
-            if (err) return res.status(500).send({ mensaje: 'Error al guardar la jornada' });
-            if (jornadaEncontrada) return res.status(500).send({mensaje: 'Está jornada ya existe'});
-    
-            jornadaConstructor.save((err, jornadaGuardada) => {
-                console.log(jornadaGuardada);
-                if (err) return res.status(500).send({ mensaje: 'Error al guardar la jornada' });
-                return res.status(200).send({jornadaGuardada})
-            })
-        }) */
-
-    })
-}
-
-// function crearJornada (req, res) {
-//     var jornadaConstructor = new jornadaModel()
-//     var ligaId = req.params.ligaId;
-//     var params = req.body;
-
-//     jornadaConstructor.nombre = params.nombre;
-//     jornadaConstructor.liga = ligaId;
-//     jornadaConstructor.games = [{}]
-
-//     jornadaModel.findOne({nombre: params.nombre, liga: ligaId},(err,jornadaEncontrada) => {
-//         if (err) return res.status(500).send({ mensaje: 'Error al guardar la jornada' });
-//         if (jornadaEncontrada) return res.status(500).send({mensaje: 'Está jornada ya existe'});
-
-//         jornadaConstructor.save((err, jornadaGuardada) => {
-//             if (err) return res.status(500).send({ mensaje: 'Error al guardar la jornada' });
-//             return res.status(200).send({jornadaGuardada});
-//         })
-//     })
-// } 
-
-function iniciarLiga(req, res) {
-    var ligaId = req.params.ligaId;
-    var jornadaConstructor = new jornadaModel()
     var equipo1
     var equipo2
-    var goles1
-    var goles2
     var juegos
     var juegosNombres
     var rondas
@@ -168,9 +103,21 @@ function create2DArray(filas,columnas) {
     return x;
  }
 
+ function simularPartido(req,res){
+    var subdocumentId = req.params.juegoId;
+    var equipo1goles = Math.round(Math.random()*5)
+    var equipo2goles = Math.round(Math.random()*5)
+
+    jornadaModel.findOneAndUpdate({"games._id": subdocumentId}, {"games.$.goles1": equipo1goles, "games.$.goles2": equipo2goles}, {new: true, useFindAndModify: false}, (err, juegoActualizado) => {
+        if(err) return res.status(500).send({mensaje: "Error al simular partido"});
+        return res.status(200).send({mensaje: juegoActualizado});
+    })
+
+}
+
 
 
 module.exports = {
     crearJornada,
-    iniciarLiga
+    simularPartido
 }
