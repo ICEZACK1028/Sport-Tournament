@@ -16,67 +16,67 @@ export class NavbarComponent implements OnInit {
   public usuarioLogueado
 
   constructor(private _router: Router, public _usuarioService: UsuarioService) {
-      this.idUsuarioModal = new Usuario("","","","","","","","","","");
-      this.usuarioLogueado = new Usuario("","","","","","","","","","");
-      this.identidad = this._usuarioService.getIdentidad();
-   }
+    this.idUsuarioModal = new Usuario("", "", "", "", "", "", "", "", "", "");
+    this.usuarioLogueado = new Usuario("", "", "", "", "", "", "", "", "", "");
+    this.identidad = this._usuarioService.getIdentidad();
+  }
 
   ngOnInit(): void {
     console.log(this.identidad);
     console.log(this.getUsuarioLogueado());
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     sessionStorage.clear()
     // this._router.navigate(['/login'])
   }
 
-  verUsuario(idUsuario){
+  verUsuario(idUsuario) {
     this._usuarioService.verUsuario(idUsuario).subscribe(
-      res=>{
+      res => {
         this.idUsuarioModal = res.verUsuario;
       },
-      err=>{
+      err => {
         console.log(<any>err);
       }
     )
   }
 
-  eliminarPerfil(idUsuario){
+  eliminarPerfil(idUsuario) {
     this._usuarioService.eliminarPerfil(idUsuario).subscribe(
-      res=>{
+      res => {
         console.log(res);
         this.cerrarSesion();
-      },err=>{
+      }, err => {
         console.log(<any>err);
 
       }
     )
   }
 
-  editarPerfil(){
+  editarPerfil() {
     this._usuarioService.editarPerfil(this.idUsuarioModal).subscribe(
-      res=>{
+      res => {
         console.log(res);
         this.getUsuarioLogueado();
-      },err=>{
+      }, err => {
         console.log(<any>err);
       }
     )
   }
 
-  getUsuarioLogueado(){
+  getUsuarioLogueado() {
     this._usuarioService.verUsuarioLogueado().subscribe(
-      res=>{
+      res => {
         console.log(res);
         this.usuarioLogueado = res.verUsuario;
-      },err=>{
+      }, err => {
         console.log(<any>err);
       }
     )
   }
 
-  refreshPage(){
+  refreshPage() {
     window.location.reload();
   }
 }
