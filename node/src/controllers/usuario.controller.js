@@ -119,12 +119,47 @@ function editarUsuario (req,res){
     });
 }
 
+//FUNCIÓN PARA EDITAR UN USUARIO
+function editarPerfil (req,res){
+    var idUsuario = req.user.sub;
+    var params = req.body;
+
+    //buscamos y actualizamos el usuario
+    usuarioModel.findOneAndUpdate({ _id: idUsuario}, {usuario: params.usuario, 
+        nombre: params.nombre, 
+        apellido: params.apellido,
+        direccion: params.direccion,
+        telefono: params.telefono,
+        correo: params.correo,
+        rol: params.rol,
+        imagen: params.imagen
+        },{new: true, useFindAndModify: false},(err, usuarioActualizado)=>{
+        if(err) return res.status(500).send({ mensaje: 'Vaya... ha saltado un error'});
+        if(!usuarioActualizado) return res.status(500).send({ mensaje: 'No se ha encontrado este usuario y / o este usuario es administrador'});
+    
+        return res.status(200).send({ usuarioActualizado });
+    });
+}
+
 //FUNCIÓN PARA ELIMINAR UN USUARIO
 function eliminarUsuario(req,res){
     var idUsuario = req.params.idUsuario;
 
     //buscamos y eliminamos por medio del ID 
     usuarioModel.findByIdAndDelete({ _id: idUsuario, rol:'ROL_USUARIO'}, (err, usuarioEliminado)=>{
+        if(err) return  res.status(500).send({ mensaje: 'Nos hemos topado con un error' });
+        if(!usuarioEliminado) return res.status(500).send({ mensaje: 'No se ha encontrado este usuario y / o este usuario es administrador'});
+    
+        return res.status(200).send({ usuarioEliminado });
+    });
+}
+
+//FUNCIÓN PARA ELIMINAR UN USUARIO
+function eliminarPerfil(req,res){
+    var idUsuario = req.params.idUsuario;
+
+    //buscamos y eliminamos por medio del ID 
+    usuarioModel.findByIdAndDelete({ _id: idUsuario}, (err, usuarioEliminado)=>{
         if(err) return  res.status(500).send({ mensaje: 'Nos hemos topado con un error' });
         if(!usuarioEliminado) return res.status(500).send({ mensaje: 'No se ha encontrado este usuario y / o este usuario es administrador'});
     
@@ -149,6 +184,19 @@ function verUsuario(req,res){
 
     //buscamos el usuario por id y lo mostramos
     usuarioModel.findById({ _id: idUsuario, rol:'ROL_USUARIO'}, (err, verUsuario)=>{
+        if(err) return res.status(500).send({ mensaje: 'Ha ocurrido un error brother' });
+        if(!verUsuario) return res.status(500).send({ mensaje: 'No se ha encontrado el usuario o es administrador'});
+
+        return res.status(200).send({ verUsuario });
+    })
+}
+
+//FUNCIÓN PARA VISUALIZAR UN USUARIO 
+function verUsuarioLogueado(req,res){
+    var idUsuario = req.user.sub;
+
+    //buscamos el usuario por id y lo mostramos
+    usuarioModel.findById({ _id: idUsuario}, (err, verUsuario)=>{
         if(err) return res.status(500).send({ mensaje: 'Ha ocurrido un error brother' });
         if(!verUsuario) return res.status(500).send({ mensaje: 'No se ha encontrado el usuario o es administrador'});
 
@@ -190,5 +238,8 @@ module.exports = {
     eliminarUsuario,
     verUsuario,
     listarUsuarios,
-    registrarAdmin
+    registrarAdmin,
+    editarPerfil,
+    eliminarPerfil,
+    verUsuarioLogueado
 }

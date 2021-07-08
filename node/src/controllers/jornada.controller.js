@@ -11,9 +11,9 @@ function iniciarLiga(req, res) {
     var rondas
 
     equipoModel.find({ ligaID: ligaId }, (err, equiposEncontrados) => {
-        if(err) return res.status(500).send({ mensaje: 'Ha ocurrido un error' });
-        if(!equiposEncontrados) return res.status(500).send({ mensaje: 'No se han encontrado equipos' });
-        
+        if (err) return res.status(500).send({ mensaje: 'Ha ocurrido un error' });
+        if (!equiposEncontrados) return res.status(500).send({ mensaje: 'No se han encontrado equipos' });
+
         var numEquipos = equiposEncontrados.length
         var numJornadas = equiposEncontrados.length - 1;
         var numPartidoPorJornada = (equiposEncontrados.length / 2);
@@ -95,13 +95,13 @@ function iniciarLiga(req, res) {
     })
 }
 
-function create2DArray(filas,columnas) {
+function create2DArray(filas, columnas) {
     var x = new Array(filas);
     for (var i = 0; i < filas; i++) {
         x[i] = new Array(columnas);
     }
     return x;
- }
+}
 
  function simularPartido(req,res){
     var subdocumentId = req.params.juegoId;
