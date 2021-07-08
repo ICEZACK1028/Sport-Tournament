@@ -27,8 +27,8 @@ export class EquiposComponent implements OnInit {
   public equipoModelGet
   public equipoModelAdd
 
-  constructor(private _usuarioService: UsuarioService, private _equipoService: EquipoService, 
-    private _ligaService: LigaService, private _jornadaService: JornadaService,private _activatedRoute: ActivatedRoute) {
+  constructor(private _usuarioService: UsuarioService, private _equipoService: EquipoService,
+    private _ligaService: LigaService, private _jornadaService: JornadaService, private _activatedRoute: ActivatedRoute) {
     this.equipoModel = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
     this.equiposLiga = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
     this.equipoModelId = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
@@ -44,7 +44,7 @@ export class EquiposComponent implements OnInit {
       this.ligaID = dataRuta.get('idLiga');
     })
     this.obtenerEquiposLiga()
-    // this.obtenerIdLiga(this.ligaID)
+    this.obtenerIdLiga(this.ligaID)
   }
 
   obtenerIdLiga(idLiga) {
@@ -69,7 +69,7 @@ export class EquiposComponent implements OnInit {
   editarEquipo() {
     console.log(this.equipoID);
     console.log(this.equipoModelId);
-    this._equipoService.editarEquipo(this.equipoModelId,this.equipoID,this.token).subscribe(
+    this._equipoService.editarEquipo(this.equipoModelId, this.equipoID, this.token).subscribe(
       response => {
         console.log(response);
         this.obtenerEquiposLiga()
@@ -78,7 +78,7 @@ export class EquiposComponent implements OnInit {
   }
 
   registrarEquipo() {
-    this._equipoService.registrarEquipo(this.equipoModelAdd,this.token,this.ligaID).subscribe(
+    this._equipoService.registrarEquipo(this.equipoModelAdd, this.token, this.ligaID).subscribe(
       response => {
         console.log(response);
         this.obtenerEquiposLiga()
@@ -104,7 +104,7 @@ export class EquiposComponent implements OnInit {
     )
   }
 
-  obtenerEquipoId(idEquipo){
+  obtenerEquipoId(idEquipo) {
     this._equipoService.obtenerEquipoId(this.token, idEquipo).subscribe(
       response => {
         this.equipoModelId = response.equipoEncontrado
@@ -114,13 +114,13 @@ export class EquiposComponent implements OnInit {
     )
   }
 
-  iniciarLiga(){
+  iniciarLiga() {
     this._jornadaService.iniciarLiga(this.ligaID).subscribe(
       response => {
         console.log(response);
       }
     )
   }
-  
+
 
 }

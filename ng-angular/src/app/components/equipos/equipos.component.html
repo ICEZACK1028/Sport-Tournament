@@ -5,12 +5,11 @@
 <div id="buttons_row">
   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar
     Equipo</button>
-  <button type="button" class="btn btn-danger" (click)="iniciarLiga()">Iniciar Liga</button>
-  <button type="button" class="btn btn-danger">Ver Tabla</button>
+  <button type="button" class="btn btn-danger" [routerLink]="['/table-view', ligaID]" (click)="iniciarLiga()">Iniciar
+    Liga</button>
   <button type="button" class="btn btn-danger">Graficas</button>
 </div>
 <div class='container'>
-
 
   <div class="card" *ngFor="let eq of equiposLiga; let i = index">
     <img src="{{eq.imagen}}" class="card-img-top" id="img-liga">
