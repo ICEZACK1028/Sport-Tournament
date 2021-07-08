@@ -1,14 +1,51 @@
-<body>
-  <div>
-    <h2 class="title">{{ligaModel.nombre}}</h2>
-  </div>
-  <br>
-  <div id="buttons_row">
-    <button type="button" class="btn btn-danger">Agregar Equipo</button>
-    <button type="button" class="btn btn-danger">Agregar Marcador</button>
-    <button type="button" class="btn btn-danger">Ver Tabla</button>
-    <button type="button" class="btn btn-danger">Graficas</button>
-  </div>
+<div>
+  <h2 class="title">{{ligaModel.nombre}}</h2>
+</div>
+<br>
+<div id="buttons_row">
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar Equipo</button>
+  <button type="button" class="btn btn-danger" >Iniciar Liga</button>
+  <button type="button" class="btn btn-danger">Ver Tabla</button>
+  <button type="button" class="btn btn-danger">Graficas</button>
+</div>
+<div class='container'>
+  
 
+  <div class="card" *ngFor="let eq of equiposLiga; let i = index">
+    <img src="{{eq.imagen}}" class="card-img-top" id="img-liga">
+    <div class="card-body" >
+      <h4>{{eq.nombre}}</h4>
+      <!-- <p>{{li.descripcion}}</p> -->
+        
+        <div class="btn-group " role="group" aria-label="Basic example" style="margin-top: 10px;">
+          <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' ><i class="bi bi-journal-arrow-up" style="color: #fff;"></i></button>
+          <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' data-bs-toggle="modal" data-bs-target="#editLiga"><i class="bi bi-pencil" style="color: #fff;"></i></button>
+          <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' data-bs-toggle="modal" data-bs-target="#deleteLiga"><i class="bi bi-trash" style="color: #fff;"></i></button>
+        </div>
+    </div>
+    
+</div>
+</div>
 
-</body>
+<!-- Modal registrar -->
+<div class="modal fade" id="addEquipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Equipo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" >
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelAdd.nombre">
+          <label for="imagen" class="form-label">Imagen</label>
+          <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelAdd.imagen">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='registrarEquipo()'>Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

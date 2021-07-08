@@ -68,10 +68,37 @@ function editarEquipo(req, res){
 
 function eliminarEquipo(req, res){
     var equipoID = req.params.equipoID
+    var cantidadEquipos
+    var idLiga
 
-    equipoModel.findOneAndDelete({_id: equipoID}, (err, equipoEliminado) =>{
-        if (err) return res.status(404).send({mensaje: 'Error al eliminar el equipo'})
-        return res.status(200).send({mensaje:'El equipo se ha eliminado con éxito'})
+    equipoModel.find({},(err, equiposEncontrados)=> {
+        if (err) return res.status(404).send({mensaje: 'Error al buscar equipos'})
+        if (!equiposEncontrados) return res.status(500).send({mensaje:'No existe ningun equipo'})
+        
+        cantidadEquipos = equiposEncontrados.length
+
+        if(cantidadEquipos >= 1){
+            equipoModel.findOneAndDelete({_id: equipoID}, (err, equipoEliminado) =>{
+                if (err) return res.status(404).send({mensaje: 'Error al eliminar el equipo'})
+                if (!equipoEliminado) return res.status(404).send({mensaje: 'Equipo Vacio'})
+    
+               return res.status(200).send({mensaje:'El equipo se ha eliminado con éxito'})
+            })
+        }else{
+            jornadaEliminar = cantidadEquipos-1
+            idLiga = equiposEncontrados[0].ligaID
+
+            equipoModel.findOneAndDelete({_id: equipoID}, (err, equipoEliminado) =>{
+                if (err) return res.status(404).send({mensaje: 'Error al eliminar el equipo'})
+                if (!equipoEliminado) return res.status(404).send({mensaje: 'Equipo Vacio'})
+    
+                jornadaModel.findOneAndDelete({numero: jornadaEliminar, liga: idLiga},(err, jornadaEliminada)=> {
+                    if (err) return res.status(500).send({mensaje:'Error al eliminar la liga'})
+                })
+               return res.status(200).send({mensaje:'El equipo se ha eliminado con éxito'})
+            })
+        }
+
     })
 }
 
@@ -94,11 +121,21 @@ function obtenerEquipos(req,res){
 }
 
 function obtenerEquiposLiga(req, res){
-    var ligaID = req.params.ligaID
-    equiposModel.find({ligaID:ligaID}, (err, encontrarEquipos)=>{
+    
+    var idLiga = req.params.idLiga
+    equipoModel.find({ligaID:idLiga}, (err, equiposEncontrados)=>{
         if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
-        if(!encontrarEquipos) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
-        return res.status(200).send({ mensaje:'Equipos Registrados', encontrarEquipos})
+        if(!equiposEncontrados) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
+        return res.status(200).send({equiposEncontrados})
+    })
+}
+
+function obtenerEquipoId(req,res){
+    var idEquipo = req.params.idEquipo
+    equipoModel.findById(idEquipo,(err,equipoEncontrado)=> {
+        if(err) return res.status(404).send({ mensaje: 'Error al obtener el equipo'});
+        if(!equipoEncontrado) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
+        return res.status(200).send({equipoEncontrado})
     })
 }
 
@@ -108,5 +145,6 @@ module.exports = {
     eliminarEquipo,
     obtenerEquipoID,
     obtenerEquipos,
-    obtenerEquiposLiga
+    obtenerEquiposLiga,
+    obtenerEquipoId
 }

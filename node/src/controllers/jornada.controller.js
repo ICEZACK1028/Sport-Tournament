@@ -2,7 +2,7 @@
 const jornadaModel = require('../models/jornada.model');
 const equipoModel = require('../models/equipo.model');
 
-function crearJornada(req, res) {
+function iniciarLiga(req, res) {
     var ligaId = req.params.ligaId;
     var equipo1
     var equipo2
@@ -118,6 +118,6 @@ function create2DArray(filas,columnas) {
 
 
 module.exports = {
-    crearJornada,
+    iniciarLiga,
     simularPartido
 }

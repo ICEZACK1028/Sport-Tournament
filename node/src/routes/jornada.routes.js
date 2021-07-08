@@ -4,7 +4,7 @@ const jornadaController = require('../controllers/jornada.controller')
 const md_autenticacion = require('../middlewares/authenticated')
 
 var api = express.Router()
-api.post('/crearJornada/:ligaId', jornadaController.crearJornada);
+api.post('/iniciarLiga/:ligaId', jornadaController.iniciarLiga);
 api.put('/simularPartido/:juegoId', jornadaController.simularPartido);
 
 module.exports = api
