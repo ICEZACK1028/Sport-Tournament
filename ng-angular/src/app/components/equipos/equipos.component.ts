@@ -93,6 +93,8 @@ export class EquiposComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.equipoModelAdd.nombre = ""
+        this.equipoModelAdd.imagen = ""
       }
     )
   }
