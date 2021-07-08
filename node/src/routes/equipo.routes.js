@@ -12,4 +12,6 @@ api.get('/obtenerEquipos', equipoController.obtenerEquipos);
 api.get('/obtenerEquiposLiga/:idLiga', equipoController.obtenerEquiposLiga)
 api.delete('/eliminarEquipo/:equipoID', md_autenticacion.ensureAuth, equipoController.eliminarEquipo);
 api.get('/obtenerEquipoId/:idEquipo', md_autenticacion.ensureAuth, equipoController.obtenerEquipoId)
+// api.put('/actualizarEquipo/:idLiga', equipoController.actualizarEquipo);
+
 module.exports = api
