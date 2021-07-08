@@ -34,6 +34,7 @@ export class TableViewComponent implements OnInit {
       this.ligaID = dataRuta.get('idLiga');
     })
     this.obtenerIdLiga(this.ligaID)
+    this.obtenerJornadaPorLiga(this.ligaID)
   }
 
   obtenerIdLiga(idLiga) {
@@ -41,7 +42,6 @@ export class TableViewComponent implements OnInit {
       response => {
         this.ligaModel = response.ligaEncontrada
         this.idLiga = idLiga
-        console.log(response);
       }
     )
   }
@@ -49,8 +49,7 @@ export class TableViewComponent implements OnInit {
   obtenerJornadaPorLiga(idLiga) {
     this._tableService.obtenerJornadaPorLiga(idLiga).subscribe(
       response => {
-        this.jornadaModel = response.ligaEncontrada
-        console.log(response);
+        this.jornadaModel = response.jornadasEncontradas
       }
     )
   }

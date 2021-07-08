@@ -10,7 +10,30 @@
     <div class="col">
     </div>
     <div class="col-5">
-      Column
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Jornada</th>
+            <th scope="col">Logo Equipo 1</th>
+            <th scope="col">Nombre Equipo 1</th>
+            <th scope="col">Goles Equipo 1</th>
+            <th scope="col">Logo Equipo 2</th>
+            <th scope="col">Nombre Equipo 2</th>
+            <th scope="col">Goles Equipo 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let jor of jornadaModel; let i = index">
+            <th scope="row">{{jor.numero}}</th>
+            <td>{{jor.numero}}</td>
+            <td>{{jor.numero}}</td>
+            <td>{{jor.games[i].goles1}}</td>
+            <td>{{jor.numero}}</td>
+            <td>{{jor.numero}}</td>
+            <td>{{jor.games[i].goles2}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="col">
     </div>
