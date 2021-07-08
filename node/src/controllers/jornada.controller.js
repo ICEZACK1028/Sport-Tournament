@@ -67,7 +67,12 @@ function crearJornada(req, res) {
 function iniciarLiga(req, res) {
     var ligaId = req.params.ligaId;
     var jornadaConstructor = new jornadaModel()
-
+    var equipo1
+    var equipo2
+    var goles1
+    var goles2
+    var juegos
+    var juegosNombres
     var rondas
 
     equipoModel.find({ ligaID: ligaId }, (err, equiposEncontrados) => {
@@ -79,58 +84,31 @@ function iniciarLiga(req, res) {
         var numPartidoPorJornada = (equiposEncontrados.length / 2);
 
         rondas = create2DArray(numJornadas,numPartidoPorJornada)
+        juegos = create2DArray(numJornadas,numPartidoPorJornada)
+        juegosNombres = create2DArray(numJornadas,numPartidoPorJornada)
+
 //---------------------------------FASE 1---------------------------------//
         for (let i = 0, k = 0; i < numJornadas; i ++){
             for (let j = 0; j < numPartidoPorJornada; j ++){
-
                 var stringTemporal = String(k)
-                // console.log(stringTemporal);
                 rondas[i][j] = stringTemporal
-                // rondas[i][j] = k
+                juegos[i][j] = equiposEncontrados[k]._id
+                juegosNombres[i][j] = equiposEncontrados[k].nombre
 
-                // jornadaModel.findOneAndUpdate({numero: i+1},
-                // { $push:{ games: {equipo1: equiposEncontrados[j]._id, goles1: 0}}},
-                // {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { })
-                
                 k ++;
                 if (k == numJornadas)
                     k = 0;
             }
         }
-        console.log(rondas);
 
 //---------------------------------FASE 2---------------------------------//
         for (let i = 0; i < numJornadas; i ++){
-           if (i % 2 == 0){
-
-               var stringTemporal2 = rondas[i][0] + " - " + String(numEquipos -1)
-               rondas[i][0]= stringTemporal2;
-
-                console.log(equiposEncontrados[i]._id);
-
-               jornadaModel.findOneAndUpdate({"games._id": equiposEncontrados[i]._id},
-                { "games.$.equipo2": equiposEncontrados[numEquipos-1]._id, "games.$.goles2": 0},
-                {new:true, useFindAndModify: false},
-                (err, jornadaFase2Add) => {
-                    console.log(jornadaFase2Add);
-                })
-               
-
-            //    rondas[i][0]= numEquipos - 1;
-           }else{  //----------------------------------else-------------------------
-
-            var stringTemporal3 = rondas[i][0] + " - " + String(numEquipos -1)
-            jornadaModel.findOneAndUpdate({numero: i},
-                { "games.$.equipo2": equiposEncontrados[numEquipos-1]._id, "games.$.goles2": 0},
-                {new:true, useFindAndModify: false},(err, jornadaFase2Add) => {
-                    console.log(jornadaFase2Add);
-                })
-            
-               rondas[i][0] = stringTemporal3;
-           }
+            var stringTemporal2 = rondas[i][0] + " - " + String(numEquipos -1)
+            rondas[i][0]= stringTemporal2;
+            juegos[i][0] = juegos[i][0] + " - " + equiposEncontrados[numEquipos-1]._id 
+            juegosNombres[i][0] = juegosNombres[i][0] + " - " + equiposEncontrados[numEquipos-1].nombre
        }
-       console.log(rondas);
-
+       
 //---------------------------------FASE 3---------------------------------//
 
        var equipoMasAlto = numEquipos - 1;
@@ -140,37 +118,45 @@ function iniciarLiga(req, res) {
            for (let j = 1; j < numPartidoPorJornada; j ++){
 
                 let stringTemporal = String(k)
-                // console.log(stringTemporal);
                 rondas[i][j] =  rondas [i][j] +' - '+ stringTemporal
+                juegos[i][j] =  juegos [i][j] +' - '+ equiposEncontrados[k]._id
+                juegosNombres[i][j] =  juegosNombres [i][j] +' - '+ equiposEncontrados[k].nombre
 
-            //    rondas[i][j] = k;
                k --;
                if (k == -1)
                    k = equipoImparMasAlto;
            }
        }
 
-    for (let i = 0, k = 0; i < numJornadas; i ++){
-           
-    for (let j = 0; j < numPartidoPorJornada; j ++){
+//---------------------------------FASE 4---------------------------------//
 
+       for (let i = 0, k = 0; i < numJornadas; i ++){
+        for (let j = 0; j < numPartidoPorJornada; j ++){
 
+            var stringTemporal = String(k)
+            var equiposNombre = juegosNombres[i][j]
+            var nombre1 = equiposNombre.split(' - ')[0]
+            var nombre2Array = equiposNombre.split(' - ')
+            var nombre2 = nombre2Array[nombre2Array.length - 1]
 
-        // console.log(Number(rondas[i][j].substring(0,1)));
-        var equipoIndex = Number(rondas[i][j].substring(0,1))
-        // console.log(equiposEncontrados[equipoIndex].nombre);
+            var equipos = juegos[i][j]
+            equipo1 = equipos.split(' ')[0]
+            var equipo2Array = equipos.split(' ')
+            equipo2 = equipo2Array[equipo2Array.length - 1]
 
-        jornadaModel.find
+            rondas[i][j] = k
 
-
-        k ++;
-        if (k == numJornadas)
-        k = 0;
-        }
+            jornadaModel.findOneAndUpdate({numero: i+1},
+            { $push:{ games: {equipo1: equipo1,nombre1: nombre1, goles1: 0,
+                              equipo2: equipo2,nombre2: nombre2, goles2: 0}}},
+            {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { })
+            
+            k ++;
+            if (k == numJornadas)
+                k = 0;
+        }   
     }
-
-       console.log(rondas);
-        return res.status(200).send(rondas)
+        return res.status(200).send({juegosNombres})
     })
 }
 
@@ -182,7 +168,7 @@ function create2DArray(filas,columnas) {
     return x;
  }
 
-//  function prueba()
+
 
 module.exports = {
     crearJornada,

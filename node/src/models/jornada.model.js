@@ -7,7 +7,9 @@ var JornadaSchema = Schema({
     liga: { type: Schema.Types.ObjectId, ref: 'ligas'},
     games: [{
         equipo1: { type: Schema.Types.ObjectId, ref: 'equipo'},
+        nombre1: String,
         equipo2: { type: Schema.Types.ObjectId, ref: 'equipo'},
+        nombre2: String,
         goles1: Number,
         goles2: Number,
     }]
