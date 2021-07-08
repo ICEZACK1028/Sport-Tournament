@@ -70,16 +70,34 @@ export class UsuarioService {
     return this._http.get(`${this.url}/verUsuario/${id}`, {headers: headersToken});
   }
 
+  verUsuarioLogueado(): Observable<any>{
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.get(`${this.url}/verUsuarioLogueado`, {headers: headersToken});
+  }
+
   editarUsuario(usuario: Usuario): Observable<any>{
     let headersToken = this.headersVariable.set('Authorization', this.getToken());
 
     return this._http.put(`${this.url}/editarUsuario/${usuario._id}`, this.JsonConvert(usuario), {headers: headersToken});
   }
 
+  editarPerfil(usuario: Usuario): Observable<any>{
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.put(`${this.url}/editarPerfil/${usuario._id}`, this.JsonConvert(usuario), {headers: headersToken});
+  }
+
   eliminarUsuario(id:String): Observable<any>{
     let headersToken = this.headersVariable.set('Authorization', this.getToken());
 
     return this._http.delete(`${this.url}/eliminarUsuario/${id}`, {headers: headersToken});
+  }
+
+  eliminarPerfil(id:String): Observable<any>{
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+
+    return this._http.delete(`${this.url}/eliminarPerfil/${id}`, {headers: headersToken});
   }
 
 }
