@@ -77,7 +77,7 @@ function eliminarEquipo(req, res){
         
         cantidadEquipos = equiposEncontrados.length
 
-        if(cantidadEquipos >= 1){
+        if(cantidadEquipos <= 1){
             equipoModel.findOneAndDelete({_id: equipoID}, (err, equipoEliminado) =>{
                 if (err) return res.status(404).send({mensaje: 'Error al eliminar el equipo'})
                 if (!equipoEliminado) return res.status(404).send({mensaje: 'Equipo Vacio'})
@@ -85,7 +85,7 @@ function eliminarEquipo(req, res){
                return res.status(200).send({mensaje:'El equipo se ha eliminado con éxito'})
             })
         }else{
-            jornadaEliminar = cantidadEquipos-1
+            var jornadaEliminar = cantidadEquipos-1
             idLiga = equiposEncontrados[0].ligaID
 
             equipoModel.findOneAndDelete({_id: equipoID}, (err, equipoEliminado) =>{
