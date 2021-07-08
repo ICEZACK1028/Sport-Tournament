@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { EquiposComponent } from './components/equipos/equipos.component';
 import { LigasAdminComponent } from './components/ligas-admin/ligas-admin.component';
+import { TableViewComponent } from './components/table-view/table-view.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LigasAdminComponent } from './components/ligas-admin/ligas-admin.compon
     UsuariosComponent,
     EquiposComponent,
     LigasAdminComponent,
+    TableViewComponent,
   ],
   imports: [
     BrowserModule,
