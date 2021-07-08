@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/sportTournament', { useNewUrlParser:
         usuarioModel.direccion = "ADMIN";
         usuarioModel.telefono = "N/A";
         usuarioModel.correo = "ADMIN";
-        usuarioModel.imagen = "https://cdn.discordapp.com/attachments/806787551271714818/862126153871654942/Enrzss9XUAIe_lI.png";
+        usuarioModel.imagen = "https://static.vecteezy.com/system/resources/previews/000/436/896/non_2x/vector-key-icon.jpg";
         usuarioModel.rol = 'ROL_ADMIN'
 
         Usuario.find({ usuario: usuarioModel.usuario }).exec((err, usuarioEncontrado) => {
