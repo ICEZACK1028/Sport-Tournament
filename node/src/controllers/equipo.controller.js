@@ -144,6 +144,8 @@ function obtenerEquipoId(req,res){
     })
 }
 
+
+
 module.exports = {
     registrarEquipo,
     editarEquipo,

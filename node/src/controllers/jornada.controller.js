@@ -9,6 +9,8 @@ function iniciarLiga(req, res) {
     var juegos
     var juegosNombres
     var rondas
+    var goles
+    var participantes
 
     equipoModel.find({ ligaID: ligaId }, (err, equiposEncontrados) => {
         if (err) return res.status(500).send({ mensaje: 'Ha ocurrido un error' });
@@ -17,10 +19,12 @@ function iniciarLiga(req, res) {
         var numEquipos = equiposEncontrados.length
         var numJornadas = equiposEncontrados.length - 1;
         var numPartidoPorJornada = (equiposEncontrados.length / 2);
-
+        
         rondas = create2DArray(numJornadas,numPartidoPorJornada)
         juegos = create2DArray(numJornadas,numPartidoPorJornada)
         juegosNombres = create2DArray(numJornadas,numPartidoPorJornada)
+        goles = create2DArray(numJornadas,numPartidoPorJornada)
+        participantes = create2DArray(numEquipos,2)
 
 //---------------------------------FASE 1---------------------------------//
         for (let i = 0, k = 0; i < numJornadas; i ++){
@@ -29,6 +33,7 @@ function iniciarLiga(req, res) {
                 rondas[i][j] = stringTemporal
                 juegos[i][j] = equiposEncontrados[k]._id
                 juegosNombres[i][j] = equiposEncontrados[k].nombre
+                goles[i][j] = Math.round(Math.random()*5)
 
                 k ++;
                 if (k == numJornadas)
@@ -36,14 +41,18 @@ function iniciarLiga(req, res) {
             }
         }
 
+        // console.log(rondas);
+        console.log(goles);
 //---------------------------------FASE 2---------------------------------//
         for (let i = 0; i < numJornadas; i ++){
             var stringTemporal2 = rondas[i][0] + " - " + String(numEquipos -1)
             rondas[i][0]= stringTemporal2;
             juegos[i][0] = juegos[i][0] + " - " + equiposEncontrados[numEquipos-1]._id 
             juegosNombres[i][0] = juegosNombres[i][0] + " - " + equiposEncontrados[numEquipos-1].nombre
+            goles[i][0] = goles[i][0] + " - " + Math.round(Math.random()*5)
        }
-       
+    //    console.log(rondas);
+       console.log(goles);
 //---------------------------------FASE 3---------------------------------//
 
        var equipoMasAlto = numEquipos - 1;
@@ -56,13 +65,16 @@ function iniciarLiga(req, res) {
                 rondas[i][j] =  rondas [i][j] +' - '+ stringTemporal
                 juegos[i][j] =  juegos [i][j] +' - '+ equiposEncontrados[k]._id
                 juegosNombres[i][j] =  juegosNombres [i][j] +' - '+ equiposEncontrados[k].nombre
+                goles[i][j] =  goles [i][j] +' - '+ Math.round(Math.random()*5)
 
                k --;
                if (k == -1)
                    k = equipoImparMasAlto;
            }
        }
+    //    console.log(rondas);
 
+console.log(goles);
 //---------------------------------FASE 4---------------------------------//
 
        for (let i = 0, k = 0; i < numJornadas; i ++){
@@ -79,18 +91,42 @@ function iniciarLiga(req, res) {
             var equipo2Array = equipos.split(' ')
             equipo2 = equipo2Array[equipo2Array.length - 1]
 
+            var goals = goles[i][j]
+            var gol1 = Number(goals.split(' ')[0])
+            var goles2Array = goals.split(' ')
+            var gol2 = Number(goles2Array[goles2Array.length - 1])
+
+            console.log('gol1');
+            console.log(gol1);
+            console.log('gol2');
+            console.log(gol2);
+            console.log('-------');
+
+
+            // console.log(goles);
+
             rondas[i][j] = k
 
+
             jornadaModel.findOneAndUpdate({numero: i+1},
-            { $push:{ games: {equipo1: equipo1,nombre1: nombre1, goles1: 0,
-                              equipo2: equipo2,nombre2: nombre2, goles2: 0}}},
-            {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { })
+            { $push:{ games: {equipo1: equipo1,nombre1: nombre1, goles1: gol1,
+                              equipo2: equipo2,nombre2: nombre2, goles2: gol2}}},
+            {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { 
+
+                // equipoModel.findByIdAndUpdate({_id: equipo1},{GF:})
+
+             })
             
+
             k ++;
             if (k == numJornadas)
                 k = 0;
         }   
     }
+
+    // console.log(rondas);
+    console.log(goles);
+
         return res.status(200).send({juegosNombres})
     })
 }
@@ -130,5 +166,5 @@ function obtenerJornadaPorLiga(req, res) {
 module.exports = {
     iniciarLiga,
     simularPartido,
-    obtenerJornadaPorLiga,
+    obtenerJornadaPorLiga
 }
