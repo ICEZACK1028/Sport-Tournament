@@ -83,6 +83,8 @@ export class EquiposComponent implements OnInit {
       response => {
         console.log(response);
         this.obtenerEquiposLiga()
+        this.equipoModelAdd.nombre = ""
+        this.equipoModelAdd.imagen = ""
       },
       (error) =>{
         console.log(error);
@@ -93,8 +95,7 @@ export class EquiposComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
         });
-        this.equipoModelAdd.nombre = ""
-        this.equipoModelAdd.imagen = ""
+        
       }
     )
   }
