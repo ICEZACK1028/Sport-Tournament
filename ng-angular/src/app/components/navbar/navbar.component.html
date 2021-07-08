@@ -1,103 +1,193 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/home" >
-      <img src="assets/img/Logo Sport-tournament 2.png" width="85%;" *ngIf="identidad.rol == 'ROL_USUARIO'" style="margin-left: 40px;">
+    <a class="navbar-brand" routerLink="/home">
+      <img src="assets/img/Logo Sport-tournament 2.png" width="85%;" *ngIf="identidad.rol == 'ROL_USUARIO'"
+        style="margin-left: 40px;">
     </a>
-    <a class="navbar-brand" routerLink="/home-admin" >
-      <img src="assets/img/Logo Sport-tournament 2.png" width="85%;" *ngIf="identidad.rol == 'ROL_ADMIN'" style="margin-left: 40px;">
+    <a class="navbar-brand" routerLink="/home-admin">
+      <img src="assets/img/Logo Sport-tournament 2.png" width="85%;" *ngIf="identidad.rol == 'ROL_ADMIN'"
+        style="margin-left: 40px;">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- <li class="nav-item">
-          <a class="nav-link" aria-current="page" routerLink="/home"  routerLinkActive="active-link" *ngIf="identidad.rol == 'ROL_USUARIO'">Home</a>
-          <a class="nav-link" aria-current="page" routerLink="/home-admin"  routerLinkActive="active-link"   *ngIf="identidad.rol == 'ROL_ADMIN'">Home</a>
-        </li> -->
-        <li class="nav-item"  routerLinkActive="activo" *ngIf="identidad.rol == 'ROL_ADMIN'">
-          <a class="nav-link" routerLink="/home" >Mis ligas</a>
+        <li class="nav-item" routerLinkActive="activo" *ngIf="identidad.rol == 'ROL_ADMIN'">
+          <a class="nav-link" routerLink="/home">Mis ligas</a>
         </li>
-        <li class="nav-item"  routerLinkActive="activo" *ngIf="identidad.rol == 'ROL_ADMIN'">
-          <a class="nav-link" routerLink="/usuarios" >Usuarios</a>
+        <li class="nav-item" routerLinkActive="activo" *ngIf="identidad.rol == 'ROL_ADMIN'">
+          <a class="nav-link" routerLink="/usuarios">Usuarios</a>
         </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> -->
       </ul>
-
-      <div class="d-flex" >
-
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
-
-          <li class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
-            <li><a class="dropdown-item" href="#">Perfil</a></li>
-            <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" (click)="cerrarSesion()">Cerrar Sesión</a></li>
-          </ul>
+      <div class="d-flex">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown dropstart">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false"></a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                  aria-controls="offcanvasRight" href="#">Perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#" (click)="cerrarSesion()">Cerrar Sesión</a></li>
+            </ul>
           </li>
         </ul>
-        <img src="https://media.discordapp.net/attachments/806787551271714818/861825516910018590/Usuario.jpg" class="img" style="margin-right: 80px"
-        *ngIf="!identidad">
-        <img src="{{identidad.imagen}}" class="img" style="margin-right: 80px"
-        *ngIf="identidad">
-
+        <img *ngIf="_usuarioService.getIdentidad().imagen" [src]="_usuarioService.getIdentidad().image" class="img"
+          style="margin-right: 80px">
+        <img *ngIf='_usuarioService.getIdentidad().imagen === ""'
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1F3Ae-Jn4grg1p75DyBRaoUnaWku56S59FCdg4mExyc0AiVW6CdDdkQh5B1pplNsnWOY&usqp=CAU"
+          class="img" style="margin-right: 80px; border:none;">
       </div>
+      <!---------------------------------------Ver Perfil --------------------------------------->
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header" style="padding-bottom: 1px;">
+          <h5 id="offcanvasRightLabel">Perfil</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <!-- Profile widget -->
+          <div class="bg-white shadow rounded overflow-hidden">
+            <div class="px-4 pt-0 pb-4 cover">
+              <div class="media align-items-end profile-head">
+                <div class="profile mr-3">
+                  <img *ngIf="_usuarioService.getIdentidad().imagen" [src]="usuarioLogueado.imagen" alt="..."
+                    width="130" class="rounded mb-2 img-thumbnail">
+                </div>
+                <img *ngIf='_usuarioService.getIdentidad().imagen === ""'
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1F3Ae-Jn4grg1p75DyBRaoUnaWku56S59FCdg4mExyc0AiVW6CdDdkQh5B1pplNsnWOY&usqp=CAU"
+                  width="130" class="rounded mb-2 img-thumbnail">
+                <div class="media-body mb-5 text-white">
+                  <h4 class="mt-0 mb-0">{{usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}</h4>
+                </div><br>
+              </div>
+            </div>
+            <div>
+            </div>
+            <div class="bg-light p-4 d-flex justify-content-end text-center">
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item">
+                  <a href="#" class="btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal"
+                    data-bs-target="#editar" style="margin-right: 10px;"
+                    (click)="verUsuario(usuarioLogueado._id)">Editar
+                    perfil</a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#" class="btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal"
+                    data-bs-target="#eliminar">Eliminar
+                    perfil</a>
+                </li>
+              </ul>
+            </div>
+            <div class="px-4 py-3">
+              <h5 class="mb-0">Información personal</h5>
+              <div class="p-4 rounded shadow-sm bg-light">
+                <p class="font-italic mb-0"><strong>Nombre:</strong> {{usuarioLogueado.nombre}}
+                  {{usuarioLogueado.apellido}}</p>
+                <hr>
+                <p class="font-italic mb-0"><strong>Dirección:</strong> {{usuarioLogueado.direccion}} </p>
+                <hr>
+                <p class="font-italic mb-0"><strong>Teléfono:</strong> {{usuarioLogueado.telefono}}</p>
+                <hr>
+                <p class="font-italic mb-0"><strong>Correo:</strong> {{usuarioLogueado.correo}}</p>
+              </div>
+            </div>
+            <div class="py-4 px-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="mb-0">Ligas</h5>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 mb-2 pr-lg-1"><img
+                    src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+                    alt="" class="img-fluid rounded shadow-sm"></div>
+                <div class="col-lg-6 mb-2 pl-lg-1"><img
+                    src="https://images.unsplash.com/photo-1493571716545-b559a19edd14?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+                    alt="" class="img-fluid rounded shadow-sm"></div>
+                <div class="col-lg-6 pr-lg-1 mb-2"><img
+                    src="https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                    alt="" class="img-fluid rounded shadow-sm"></div>
+                <div class="col-lg-6 pl-lg-1"><img
+                    src="https://images.unsplash.com/photo-1475724017904-b712052c192a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+                    alt="" class="img-fluid rounded shadow-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Modal para Editar Usuario -->
+        <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Editar usuario</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="firstname" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel"
+                      [(ngModel)]="idUsuarioModal.nombre">
+                  </div>
+                  <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" #apellido="ngModel"
+                      [(ngModel)]="idUsuarioModal.apellido">
+                  </div>
+                  <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" #direccion="ngModel"
+                      [(ngModel)]="idUsuarioModal.direccion">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Teléfono</label>
+                    <input type="email" class="form-control" id="telefono" name="telefono" #telefono="ngModel"
+                      [(ngModel)]="idUsuarioModal.telefono">
+                  </div>
+                  <div class="mb-3">
+                    <label for="correo" class="form-label">Correo</label>
+                    <input type="email" class="form-control" id="correo" name="correo" #correo="ngModel"
+                      [(ngModel)]="idUsuarioModal.correo">
+                  </div>
+                  <div class="mb-3">
+                    <label for="imagen" class="form-label">Imagen</label>
+                    <input type="text" class="form-control" id="imagen" name="imagen" #imagen="ngModel"
+                      [(ngModel)]="idUsuarioModal.imagen">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="editarPerfil()">Guardar
+                  cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Modal para Eliminar Usuario -->
+        <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Eliminar cuenta</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ¿Si elimina su perfil perderá todo su historial?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                  (click)="eliminarPerfil(usuarioLogueado._id)">Sí, elimínalo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
-
-<!-- NAVBAR PARA LOGIN -->
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav> -->
