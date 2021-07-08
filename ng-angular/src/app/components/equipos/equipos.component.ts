@@ -6,6 +6,7 @@ import { LigaService } from 'src/app/services/liga.service';
 import { EquipoService } from 'src/app/services/equipo.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { JornadaService } from 'src/app/services/jornada.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-equipos',
@@ -82,6 +83,16 @@ export class EquiposComponent implements OnInit {
       response => {
         console.log(response);
         this.obtenerEquiposLiga()
+      },
+      (error) =>{
+        console.log(error);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'No pueden haber mas de 10 equipos',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     )
   }
