@@ -3,28 +3,32 @@
 </div>
 <br>
 <div id="buttons_row">
-  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar Equipo</button>
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar
+    Equipo</button>
   <button type="button" class="btn btn-danger" (click)="iniciarLiga()">Iniciar Liga</button>
   <button type="button" class="btn btn-danger">Ver Tabla</button>
   <button type="button" class="btn btn-danger">Graficas</button>
 </div>
 <div class='container'>
-  
+
 
   <div class="card" *ngFor="let eq of equiposLiga; let i = index">
     <img src="{{eq.imagen}}" class="card-img-top" id="img-liga">
-    <div class="card-body" >
+    <div class="card-body">
       <h4>{{eq.nombre}}</h4>
       <!-- <p>{{li.descripcion}}</p> -->
-        
-        <div class="btn-group " role="group" aria-label="Basic example" style="margin-top: 10px;">
-          <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' ><i class="bi bi-journal-arrow-up" style="color: #fff;"></i></button>
-          <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' data-bs-toggle="modal" data-bs-target="#editEquipo"><i class="bi bi-pencil" style="color: #fff;"></i></button>
-          <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' data-bs-toggle="modal" data-bs-target="#deleteEquipo"><i class="bi bi-trash" style="color: #fff;"></i></button>
-        </div>
+
+      <div class="btn-group " role="group" aria-label="Basic example" style="margin-top: 10px;">
+        <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)'><i
+            class="bi bi-journal-arrow-up" style="color: #fff;"></i></button>
+        <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' data-bs-toggle="modal"
+          data-bs-target="#editEquipo"><i class="bi bi-pencil" style="color: #fff;"></i></button>
+        <button type="button" class="btn btn-primary" (click)='obtenerEquipoId(eq._id)' data-bs-toggle="modal"
+          data-bs-target="#deleteEquipo"><i class="bi bi-trash" style="color: #fff;"></i></button>
+      </div>
     </div>
-    
-</div>
+
+  </div>
 </div>
 
 <!-- Modal registrar -->
@@ -35,15 +39,17 @@
         <h5 class="modal-title" id="exampleModalLabel">Agregar Equipo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" >
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelAdd.nombre">
-          <label for="imagen" class="form-label">Imagen</label>
-          <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelAdd.imagen">
+      <div class="modal-body">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel"
+          [(ngModel)]="equipoModelAdd.nombre">
+        <label for="imagen" class="form-label">Imagen</label>
+        <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelAdd.imagen">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='registrarEquipo()'>Guardar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+          (click)='registrarEquipo()'>Guardar</button>
       </div>
     </div>
   </div>
@@ -58,10 +64,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelId.nombre">
-          <label for="imagen" class="form-label">Imágen</label>
-          <input type="text" class="form-control" id="imagen" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelId.imagen">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelId.nombre">
+        <label for="imagen" class="form-label">Imágen</label>
+        <input type="text" class="form-control" id="imagen" name="imagen" #imagen="ngModel"
+          [(ngModel)]="equipoModelId.imagen">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -71,20 +78,19 @@
   </div>
 </div>
 
-      <!-- Modal deleteLiga -->
+<!-- Modal deleteLiga -->
 
-      <div class="modal fade" id="deleteEquipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">¿Está seguro que quiere eliminar el equipo?</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='eliminarEquipo()'>Si </button>
-            </div>
-          </div>
-        </div>
+<div class="modal fade" id="deleteEquipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Está seguro que quiere eliminar el equipo?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='eliminarEquipo()'>Si </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -115,9 +115,20 @@ function create2DArray(filas,columnas) {
 
 }
 
+function obtenerJornadaPorLiga(req, res) {
+    var ligaId = req.params.ligaId
+
+    jornadaModel.find({liga: ligaId}, (err, jornadasEncontradas) => {
+        if(err) return res.status(500).send({mensaje: "Error al encontrar jornada"})
+        if(!jornadasEncontradas) return res.status(500).send({mensaje: "Jornada vacia"})
+        return res.status(200).send({jornadasEncontradas});
+    })
+}
+
 
 
 module.exports = {
     iniciarLiga,
-    simularPartido
+    simularPartido,
+    obtenerJornadaPorLiga,
 }
