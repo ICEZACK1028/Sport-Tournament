@@ -22,8 +22,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.identidad);
-    console.log(this.getUsuarioLogueado());
+    this.identidad
+    this.getUsuarioLogueado()
   }
 
   cerrarSesion() {

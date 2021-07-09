@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 export class EquiposComponent implements OnInit {
   public token
   public equipoModel
-  public equiposLiga
+  public equiposLiga: Equipo[]
   public ligaModel
   public equipoID
   public ligaID
@@ -33,7 +33,7 @@ export class EquiposComponent implements OnInit {
   constructor(private _usuarioService: UsuarioService, private _equipoService: EquipoService,
     private _ligaService: LigaService, private _jornadaService: JornadaService, private _activatedRoute: ActivatedRoute) {
     this.equipoModel = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
-    this.equiposLiga = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
+    
     this.equipoModelId = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
     this.equipoModelGet = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
     this.equipoModelAdd = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
@@ -55,7 +55,7 @@ export class EquiposComponent implements OnInit {
       response => {
         this.ligaModel = response.ligaEncontrada
         this.idLiga = idLiga
-        console.log(response);
+        // console.log(response);
       }
     )
   }
@@ -63,7 +63,7 @@ export class EquiposComponent implements OnInit {
   eliminarEquipo() {
     this._equipoService.eliminarEquipo(this.equipoID, this.token).subscribe(
       Response => {
-        console.log(Response);
+        // console.log(Response);
         this.obtenerEquiposLiga()
       }
     )
@@ -74,7 +74,7 @@ export class EquiposComponent implements OnInit {
     console.log(this.equipoModelId);
     this._equipoService.editarEquipo(this.equipoModelId, this.equipoID, this.token).subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
         this.obtenerEquiposLiga()
       }
     )
@@ -83,7 +83,7 @@ export class EquiposComponent implements OnInit {
   registrarEquipo() {
     this._equipoService.registrarEquipo(this.equipoModelAdd, this.token, this.ligaID).subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
         this.obtenerEquiposLiga()
         this.equipoModelAdd.nombre = ""
         this.equipoModelAdd.imagen = ""
@@ -115,7 +115,7 @@ export class EquiposComponent implements OnInit {
     this._equipoService.obtenerEquiposLiga(this.ligaID).subscribe(
       response => {
         this.equiposLiga = response.equiposEncontrados
-        console.log(this.equiposLiga);
+        // console.log(this.equiposLiga);
       }
     )
   }
@@ -125,7 +125,7 @@ export class EquiposComponent implements OnInit {
       response => {
         this.equipoModelId = response.equipoEncontrado
         this.equipoID = idEquipo
-        console.log(response);
+        // console.log(response);
       }
     )
   }
@@ -133,7 +133,7 @@ export class EquiposComponent implements OnInit {
   iniciarLiga() {
     this._jornadaService.iniciarLiga(this.ligaID).subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
         this.partidos = response.juegosNombres
       }
     )
