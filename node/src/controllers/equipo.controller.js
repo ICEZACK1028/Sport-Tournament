@@ -144,6 +144,48 @@ function obtenerEquipoId(req,res){
     })
 }
 
+function pruebaTabla(req,res){
+    var ligaId = req.params.idLiga
+
+    jornadaModel.find({liga: ligaId},(err,jornadaEncontrada)=>{
+
+        for (let x = 0; x < jornadaEncontrada.length; x++) {
+            for (let i = 0; i < jornadaEncontrada[x].games.length; i++) {
+                // console.log(jornadaEncontrada[x].games[i].nombre1);
+                var GF1 = jornadaEncontrada[x].games[i].goles1
+                var GF2 = jornadaEncontrada[x].games[i].goles2
+                var difGol = jornadaEncontrada[x].games[i].goles1 - jornadaEncontrada[x].games[i].goles2
+
+                if(jornadaEncontrada[x].games[i].goles1 > jornadaEncontrada[x].games[i].goles2){
+                    //GANA EL EQUIPO 1
+
+                    console.log(jornadaEncontrada[x].games[i].nombre1, GF1);
+                    console.log(jornadaEncontrada[x].games[i].nombre2, GF2);
+                    equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo1,
+                        {$inc:{PJ:1, PG:1, GF:GF1,GC:GF2,DG: difGol,PT:3}},(err, equipo1Encontrado) => {
+
+                        })
+                        console.log(GF2);
+                        equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo2,
+                            {$inc:{PJ:1, PP:1, GF:jornadaEncontrada[x].games[i].goles2, GC:GF1, DG: -difGol,PT:0}},(err, equipo1Encontrado) => {
+                            
+                        })
+
+                }if (jornadaEncontrada[x].games[i].goles1 < jornadaEncontrada[x].games[i].goles2) {
+                    //GANA EL EQUIPO 2
+
+                } else {
+                    //EMPATE
+                }
+
+                
+
+            }
+        }
+
+    })
+}
+
 
 
 module.exports = {
@@ -153,5 +195,6 @@ module.exports = {
     obtenerEquipoID,
     obtenerEquipos,
     obtenerEquiposLiga,
-    obtenerEquipoId
+    obtenerEquipoId,
+    pruebaTabla
 }
