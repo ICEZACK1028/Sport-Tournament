@@ -18,7 +18,7 @@ export class LigasAdminComponent implements OnInit {
   public idLiga
 
   constructor(private _usuarioService: UsuarioService,private _ligaService: LigaService) { 
-    this.ligasModel = new Liga("","","","","")
+    // this.ligasModel = new Liga("","","","","")
     this.ligaModelAdd = new Liga("","","","","")
     this.ligaModelId = new Liga("","","","","")
   }

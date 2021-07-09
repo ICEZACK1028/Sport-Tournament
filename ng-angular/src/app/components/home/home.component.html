@@ -27,9 +27,9 @@
         </div>
         <div class="modal-body" >
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="ligaModelAdd.nombre">
+            <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="ligaModelAdd.nombre">
             <label for="descripcion" class="form-label">Descripcion</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" #descripcion="ngModel" [(ngModel)]="ligaModelAdd.descripcion"></textarea>
+            <textarea class="form-control" name="descripcion" #descripcion="ngModel" [(ngModel)]="ligaModelAdd.descripcion"></textarea>
             <label for="imagen" class="form-label">Imagen</label>
             <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="ligaModelAdd.imagen">
         </div>
@@ -53,9 +53,9 @@
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="ligaModelId.nombre">
                 <label for="descripcion" class="form-label">Descripcion</label>
-                <textarea class="form-control"  id="descripcion" name="descripcion" #descripcion="ngModel" [(ngModel)]="ligaModelId.descripcion"></textarea>
+                <textarea class="form-control"   name="descripcion" #descripcion="ngModel" [(ngModel)]="ligaModelId.descripcion"></textarea>
                 <label for="imagen" class="form-label">Imágen</label>
-                <input type="text" class="form-control" id="imagen" name="imagen" #imagen="ngModel" [(ngModel)]="ligaModelId.imagen">
+                <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="ligaModelId.imagen">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

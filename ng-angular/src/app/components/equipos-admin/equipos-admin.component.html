@@ -51,13 +51,13 @@
       <form>
         <div class="modal-body" >
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelAdd.nombre">
+            <input type="text" class="form-control"  name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelAdd.nombre">
             <label for="imagen" class="form-label">Imagen</label>
             <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelAdd.imagen">
             <label for="imagen" class="form-label">Liga</label>
             
             <select class="form-control"  id="LigaID" name="LigaID" #LigaID="ngModel" [(ngModel)]="idLiga">
-              <option *ngFor="let li of ligasUsuario; let i = index;" value={{li._id}} >{{li.nombre}} {{li._id}}</option>
+              <option *ngFor="let li of ligasUsuario; let i = index;" value={{li._id}} >{{li.nombre}}</option>
             </select>
         </div>
         <div class="modal-footer">
@@ -79,9 +79,9 @@
           </div>
           <div class="modal-body">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelId.nombre" >
+              <input type="text" class="form-control"  name="nombre" #nombre="ngModel" [(ngModel)]="equipoModelId.nombre" >
               <label for="imagen" class="form-label">Imágen</label>
-              <input type="text" class="form-control" id='imagen'name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelId.imagen" >
+              <input type="text" class="form-control" name="imagen" #imagen="ngModel" [(ngModel)]="equipoModelId.imagen" >
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

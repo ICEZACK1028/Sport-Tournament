@@ -18,23 +18,23 @@ export class EquiposAdminComponent implements OnInit {
   public token
   public idEquipo
   public equipoModelAdd
-  public equipoModelGet
+  public equipoModelGet: Equipo[]
   public equipoModelEdit
   public equipoModelId
-  public ligasUsuario 
+  public ligasUsuario: Liga[] 
   public idLiga
 
   constructor(public _usuarioService: UsuarioService, public _equipoService: EquipoService, public _ligaService: LigaService) { 
     this.equipoModelAdd = new Equipo('','','',0,0,0,0,0,0,0,0,'')
-    this.equipoModelGet = new Equipo('','','',0,0,0,0,0,0,0,0,'')
+    // this.equipoModelGet = new Equipo('','','',0,0,0,0,0,0,0,0,'')
+
     this.equipoModelId = new Equipo('','','',0,0,0,0,0,0,0,0,'')
     this.equipoModelEdit = new Equipo('','','',0,0,0,0,0,0,0,0,'')
-    this.ligasUsuario = new Liga('','','','','')
+    // this.ligasUsuario = new Liga('','','','','')
   }
 
   ngOnInit(): void {
     this.token = this._usuarioService.getToken()
-    console.log(this.token);
     this.obtenerEquipos()
     this.obtenerLigasUsuario()
   }

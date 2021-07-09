@@ -11,6 +11,6 @@ export class Equipo{
         public GC: Number,
         public DG: Number,
         public PT: Number,
-        public LigaID: String,
+        public ligaID: String,
     ){}
 }

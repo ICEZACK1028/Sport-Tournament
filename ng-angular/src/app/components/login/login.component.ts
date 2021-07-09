@@ -12,11 +12,13 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class LoginComponent implements OnInit {
   public usuarioModel: Usuario
+  public usuarioLogin: Usuario
   public token
   public identidad
 
   constructor(private _usuarioService: UsuarioService, private _router: Router) {
     this.usuarioModel = new Usuario("","","","","","","","","","");
+    this.usuarioLogin = new Usuario("","","","","","","","","","");
   }
 
   ngOnInit(): void {
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   getToken(){
-    this._usuarioService.login(this.usuarioModel,'true').subscribe(
+    this._usuarioService.login(this.usuarioLogin,'true').subscribe(
       response => {
         this.token = response.token;
         sessionStorage.setItem('token',this.token)
@@ -36,18 +38,18 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this._usuarioService.login(this.usuarioModel).subscribe(
+    this._usuarioService.login(this.usuarioLogin).subscribe(
       response => {
         this.identidad = response.usuarioEncontrado;
         sessionStorage.setItem('identidad', JSON.stringify(this.identidad))
         this.getToken();
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Bienvenido`,
-          showConfirmButton: false,
-          timer: 1500
-        })
+        // Swal.fire({
+        //   position: 'center',
+        //   icon: 'success',
+        //   title: `Bienvenido`,
+        //   showConfirmButton: false,
+        //   timer: 1500
+        // })
         if(this.identidad.rol == "ROL_ADMIN")this._router.navigate(['/home-admin'])
         if(this.identidad.rol == "ROL_USUARIO")this._router.navigate(['/home'])
       },

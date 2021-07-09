@@ -1,6 +1,11 @@
-<div>
+<!-- <div>
   <h2 class="title">{{ligaModel.nombre}}</h2>
+</div> -->
+
+<div class="row">
+  <h2 class="title" style="Font-Family: Roboto"> {{ligaModel.nombre}} <br> </h2>
 </div>
+
 <br>
 <div id="buttons_row">
   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addEquipo">Agregar Equipo</button>
@@ -9,6 +14,12 @@
     Liga</button>
   <button type="button" class="btn btn-danger">Graficas</button>
 </div>
+
+
+  
+
+<br>
+
 <div class='container'>
 
   <div class="card" *ngFor="let eq of equiposLiga; let i = index">

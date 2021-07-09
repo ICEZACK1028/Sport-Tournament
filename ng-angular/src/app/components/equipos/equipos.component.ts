@@ -23,6 +23,7 @@ export class EquiposComponent implements OnInit {
   public equipoID
   public ligaID
   public equipos
+  
   public idLiga
   public equipoModelId
   public equipoModelGet
