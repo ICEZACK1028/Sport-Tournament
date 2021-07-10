@@ -1,97 +1,93 @@
 <body>
+
   <div>
     <h2 class="title">{{ligaModel.nombre}}</h2>
   </div>
+
+  <br>
+  <div id="buttons_row">
+    <button type="button" class="btn btn-danger">Graficas</button>
+    <button type="button" class="btn btn-danger">PDF</button>
+  </div>
   <br>
 
-  <div style="text-align:center" *ngFor="let jor of jornadaModel; let i = index; let eqp of equipoModel">
-    <div class="row" >
-    <!-- <h5 style="text-align: center;">Jornada {{i+1}}</h5 > -->
-      <hr>
-      <div class="col-5">
-        <!-- <img src="{{jor.games[i].imagen1}}"> -->
-        <div>{{jor.games[i].nombre1}} ({{jor.games[i].goles1}})</div>
+  <!-- <div style="text-align: center;" *ngFor="let jor of jornadaModel; let i = index;">
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col">
+        <div>{{jor.games[i].nombre1}}</div>
       </div>
-      <div class="col-2">
-        Vs {{i}}
+      <div class="col-1">
+        {{jor.games[i].goles1}} Vs {{jor.games[i].goles2}}
       </div>
-      <div class="col-5">
-        <!-- <img src="{{jor.games[i].imagen2}}"> -->
-
-        <div>({{jor.games[i].goles2}}) {{jor.games[i].nombre2}} </div>
+      <div class="col">
+        <div>{{jor.games[i].nombre2}}</div>
       </div>
+      <div class="col-4"></div>
     </div>
     <br>
 
     <div class="row" *ngIf="i%2 == 0">
-      <div class="col-5">
-        <div>{{jor.games[i+1].nombre1}} ({{jor.games[i+1].goles1}})</div>
+      <div class="col-4"></div>
+      <div class="col">
+        <div>{{jor.games[i+1].nombre1}}</div>
       </div>
-      <div class="col-2">
-        Vs {{i}}
+      <div class="col-1">
+        {{jor.games[i+1].goles1}} Vs {{jor.games[i+1].goles2}}
       </div>
-      <div class="col-5">
-        <div>({{jor.games[i+1].goles2}}) {{jor.games[i+1].nombre2}}</div>
+      <div class="col">
+        <div>{{jor.games[i+1].nombre2}}</div>
       </div>
+      <div class="col-4"></div>
     </div>
 
-    <div class="row" *ngIf="i%2 != 0">
-      <div class="col-5">
-        <div>{{jor.games[i-1].nombre1}} ({{jor.games[i-1].goles1}})</div>
+     <div class="row" *ngIf="i%2 != 0">
+      <div class="col-4"></div>
+      <div class="col">
+        <div>{{jor.games[i-1].nombre1}}</div>
       </div>
-      <div class="col-2">
-        Vs {{i}}
+      <div class="col-1">
+        {{jor.games[i-1].goles1}} Vs {{jor.games[i-1].goles2}}
       </div>
-      <div class="col-5">
-        <div>({{jor.games[i-1].goles2}}) {{jor.games[i-1].nombre2}}</div>
+      <div class="col">
+        <div>{{jor.games[i-1].nombre2}}</div>
       </div>
+      <div class="col-4"></div>
     </div>
-
-    <!-- <div class="row" >
-      <div class="col-5">
-        <div>{{jor.games[2].nombre1}} ({{jor.games[2].goles1}})</div>
-      </div>
-      <div class="col-2">
-        Vs {{i}}
-      </div>
-      <div class="col-5">
-        <div>({{jor.games[2].goles2}}) {{jor.games[2].nombre2}}</div>
-      </div>
-    </div> -->
-
     <br>
-  </div>
+  </div> -->
 
-  <div id="buttons_row">
-    <button type="button" class="btn btn-danger">Graficas</button>
-  </div>
+
   <div class="row">
     <div class="col">
     </div>
     <div class="col-5">
       <table class="table table-striped">
         <thead>
-          <tr>
-            <!-- <th scope="col">Jornada</th> -->
-            <th scope="col">Logo Equipo 1</th>
-            <th scope="col">Nombre Equipo 1</th>
-            <th scope="col">Goles Equipo 1</th>
-            <th scope="col">Logo Equipo 2</th>
-            <th scope="col">Nombre Equipo 2</th>
-            <th scope="col">Goles Equipo 2</th>
+          <tr style="text-align: center;">
+            <th colspan="2">Equipo</th>
+            <th scope="col">PJ</th>
+            <th scope="col">PG</th>
+            <th scope="col">PP</th>
+            <th scope="col">PE</th>
+            <th scope="col">GF</th>
+            <th scope="col">GC</th>
+            <th scope="col">DG</th>
+            <th scope="col">PT</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let jor of jornadaModel; let i = index; ">
-            <!-- <th scope="row">{{i+1}}</th> -->
-            <th>{{jor.games[i].nombre1}}</th>
-            <td>{{jor.games[i].nombre2}}</td>
-
-            <td>{{jor.games[i].nombre1}}</td>
-            <td>{{jor.games[i].nombre2  }}</td>
-
-            <td>{{jor.games[i].goles1}}</td>
-            <td>{{jor.games[i].goles2}}</td>
+          <tr *ngFor="let eqp of equipoModel; " style="vertical-align: middle; text-align: center;">
+            <td><img src="{{eqp.imagen}}" style="height: 50px;"></td>
+            <td style="text-align: left;">{{eqp.nombre}}</td>
+            <td>{{eqp.PJ}}</td>
+            <td>{{eqp.PG}}</td>
+            <td>{{eqp.PP}}</td>
+            <td>{{eqp.PE}}</td>
+            <td>{{eqp.GF}}</td>
+            <td>{{eqp.GC}}</td>
+            <td>{{eqp.DG}}</td>
+            <td>{{eqp.PT}}</td>
           </tr>
         </tbody>
       </table>
@@ -99,4 +95,5 @@
     <div class="col">
     </div>
   </div>
+
 </body>

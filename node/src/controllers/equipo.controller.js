@@ -1,8 +1,6 @@
 'use strict'
 const equipoModel = require('../models/equipo.model');
 const jornadaModel = require('../models/jornada.model');
-const ligaModel = require('../models/liga.model');
-// const { param } = require('../routes/equipo.routes');
 
 function registrarEquipo(req, res){
     var equipo = new equipoModel()
@@ -22,13 +20,11 @@ function registrarEquipo(req, res){
     equipo.ligaID = ligaID;
 
     equipoModel.find({ligaID: ligaID},(err, equiposEncontrados) => {
-        ///if (equiposEncontrados.length >= 10){
-           /// return res.status(404).send({mensaje: 'Solo puedes ingresar 10 equipos'})
-        ///}
         if (err) return res.status(404).send({ mensaje: 'Error al buscar equipo'})
         if (!equiposEncontrados) return res.status(404).send({mensaje: '!Equipos'})
-        // console.log(equiposEncontrados);
-
+        if (equiposEncontrados.length >= 10){
+            return res.status(404).send({mensaje: 'Solo puedes ingresar 10 equipos'})
+         }
 
         equipoModel.findOne({nombre: params.nombre, ligaID: ligaID}, (err, encontrarEquipo) =>{
             if (err) return res.status(404).send({ mensaje: 'Error al guardar equipo'})
@@ -36,7 +32,6 @@ function registrarEquipo(req, res){
 
             equipo.save((err, guardarEquipo) => {
                 if (err) return res.status(404).send({ mensaje: 'Error al guardar'})
-                console.log(equiposEncontrados.length);
                 if (equiposEncontrados.length >= 1 ){
                     crearJornada(guardarEquipo.ligaID,equiposEncontrados.length)
                 }
@@ -126,7 +121,6 @@ function obtenerEquipos(req,res){
 }
 
 function obtenerEquiposLiga(req, res){
-    
     var idLiga = req.params.idLiga
     equipoModel.find({ligaID:idLiga}, (err, equiposEncontrados)=>{
         if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
@@ -135,53 +129,52 @@ function obtenerEquiposLiga(req, res){
     })
 }
 
-function obtenerEquipoId(req,res){
-    var idEquipo = req.params.idEquipo
-    equipoModel.findById(idEquipo,(err,equipoEncontrado)=> {
-        if(err) return res.status(404).send({ mensaje: 'Error al obtener el equipo'});
-        if(!equipoEncontrado) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
-        return res.status(200).send({equipoEncontrado})
-    })
-}
-
-function pruebaTabla(req,res){
+function crearTabla(req,res){
     var ligaId = req.params.idLiga
 
     jornadaModel.find({liga: ligaId},(err,jornadaEncontrada)=>{
 
         for (let x = 0; x < jornadaEncontrada.length; x++) {
             for (let i = 0; i < jornadaEncontrada[x].games.length; i++) {
-                // console.log(jornadaEncontrada[x].games[i].nombre1);
                 var GF1 = jornadaEncontrada[x].games[i].goles1
                 var GF2 = jornadaEncontrada[x].games[i].goles2
                 var difGol = jornadaEncontrada[x].games[i].goles1 - jornadaEncontrada[x].games[i].goles2
 
                 if(jornadaEncontrada[x].games[i].goles1 > jornadaEncontrada[x].games[i].goles2){
                     //GANA EL EQUIPO 1
-
-                    console.log(jornadaEncontrada[x].games[i].nombre1, GF1);
-                    console.log(jornadaEncontrada[x].games[i].nombre2, GF2);
                     equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo1,
-                        {$inc:{PJ:1, PG:1, GF:GF1,GC:GF2,DG: difGol,PT:3}},(err, equipo1Encontrado) => {
+                        {$inc:{PJ:1, PG:1, PP:0, PE:0, GF:GF1, GC:GF2, DG: difGol, PT:3}}, {useFindAndModify: false, new: true}, (err, equipo1Encontrado) => {
 
                         })
-                        console.log(GF2);
                         equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo2,
-                            {$inc:{PJ:1, PP:1, GF:jornadaEncontrada[x].games[i].goles2, GC:GF1, DG: -difGol,PT:0}},(err, equipo1Encontrado) => {
-                            
+                            {$inc:{PJ:1, PG:0, PP:1, PE:0, GF:GF2, GC:GF1, DG: -difGol, PT:0}}, {useFindAndModify: false, new: true}, (err, equipo2Encontrado) => {
                         })
 
-                }if (jornadaEncontrada[x].games[i].goles1 < jornadaEncontrada[x].games[i].goles2) {
+                } else if (jornadaEncontrada[x].games[i].goles1 < jornadaEncontrada[x].games[i].goles2) {
                     //GANA EL EQUIPO 2
-
+                    equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo2,
+                        {$inc:{PJ:1, PG:1, PP:0, PE:0, GF:GF2, GC:GF1, DG: -difGol, PT:3}}, {useFindAndModify: false, new: true}, (err, equipo2Encontrado) => {
+                        })
+                        equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo1,
+                            {$inc:{PJ:1, PG:0, PP:1, PE:0, GF:GF1, GC:GF2, DG: difGol, PT:0}}, {useFindAndModify: false, new: true}, (err, equipo1Encontrado) => {  
+                        })
                 } else {
                     //EMPATE
+                    equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo1,
+                        {$inc:{PJ:1, PG:0, PP:0, PE:1, GF:GF1, GC:GF2, DG: difGol, PT:1}}, {useFindAndModify: false, new: true}, (err, equipo1Encontrado) => {
+                        })
+                        equipoModel.findByIdAndUpdate(jornadaEncontrada[x].games[i].equipo2,
+                            {$inc:{PJ:1, PG:0, PP:0, PE:1, GF:GF2, GC:GF1, DG: -difGol, PT:1}}, {useFindAndModify: false, new: true}, (err, equipo2Encontrado) => {
+                        })
                 }
 
                 
 
             }
         }
+        if (err) return res.status(500).send({mensaje: "Error al buscar jornada"})
+        if (!jornadaEncontrada) return res.status(500).send({mensaje: "Jornada encontrada vacia"})
+        return res.status(200).send({jornadaEncontrada});
 
     })
 }
@@ -195,6 +188,5 @@ module.exports = {
     obtenerEquipoID,
     obtenerEquipos,
     obtenerEquiposLiga,
-    obtenerEquipoId,
-    pruebaTabla
+    crearTabla
 }

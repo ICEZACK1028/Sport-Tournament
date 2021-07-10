@@ -7,13 +7,12 @@ import { LigaService } from 'src/app/services/liga.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute } from '@angular/router';
 import { TableViewService } from 'src/app/services/table-view.service';
-// import { EquiposComponent } from '../equipos/equipos.component';
 
 @Component({
   selector: 'app-table-view',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
-  providers: [EquipoService,UsuarioService,LigaService]
+  providers: [EquipoService, UsuarioService, LigaService]
 })
 export class TableViewComponent implements OnInit {
 
@@ -23,7 +22,6 @@ export class TableViewComponent implements OnInit {
   public equipoModel
   public ligaID
   public idLiga
-  // public partidos2 = EquiposComponent.partidos
 
   constructor(private _ligaService: LigaService,
     private _activatedRoute: ActivatedRoute,
@@ -47,9 +45,9 @@ export class TableViewComponent implements OnInit {
     this._activatedRoute.paramMap.subscribe(dataRuta => {
       this.ligaID = dataRuta.get('idLiga');
     })
-    this.obtenerIdLiga(this.ligaID)
-    this.obtenerJornadaPorLiga(this.ligaID)
-    // console.log( this.partidos2);
+    this.obtenerIdLiga(this.ligaID);
+    this.obtenerJornadaPorLiga(this.ligaID);
+    this.obtenerEquipoPorLiga(this.ligaID);
   }
 
   obtenerIdLiga(idLiga) {
@@ -69,13 +67,12 @@ export class TableViewComponent implements OnInit {
     )
   }
 
-  obtenerEquipoPorId(idEquipo) {
-    this._equipoService.obtenerEquipoId(idEquipo).subscribe(
+  obtenerEquipoPorLiga(idLiga) {
+    this._equipoService.obtenerEquiposLiga(idLiga).subscribe(
       response => {
-        this.equipoModel = response.equipoEncontrado
+        this.equipoModel = response.equiposEncontrados
         console.log(response);
       }
     )
   }
-
 }

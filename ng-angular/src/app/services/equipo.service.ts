@@ -8,45 +8,49 @@ import { GLOBAL } from './global.service'
 })
 
 export class EquipoService {
-    public url: String;
-    public headers = new HttpHeaders().set('Content-type', 'application/json')
-    public token;
+  public url: String;
+  public headers = new HttpHeaders().set('Content-type', 'application/json')
+  public token;
 
-    constructor(public _http: HttpClient) { 
-        this.url = GLOBAL.url
-    }
-    
-    obtenerEquipos(token): Observable<any>{
-        let headersToken = this.headers.set('Authorization', token)
-        return this._http.get(this.url+'/obtenerEquipos', {headers:headersToken})
-    }
+  constructor(public _http: HttpClient) {
+    this.url = GLOBAL.url
+  }
 
-    registrarEquipo(equipo, token, idLiga): Observable<any> {
-        let headersToken = this.headers.set('Authorization', token)
-        let params= JSON.stringify(equipo)
-        return this._http.post(this.url+'/registrarEquipo/'+idLiga, params,{headers:headersToken})
-    }
+  obtenerEquipos(token): Observable<any> {
+    let headersToken = this.headers.set('Authorization', token)
+    return this._http.get(this.url + '/obtenerEquipos', { headers: headersToken })
+  }
 
-    obtenerEquiposLiga(ligaID:String): Observable<any>{
-        let headersToken = this.headers.set('Authorization', this.token)
-        return this._http.get(this.url + '/obtenerEquiposLiga/' + ligaID, {headers: this.headers})
-    }
+  registrarEquipo(equipo, token, idLiga): Observable<any> {
+    let headersToken = this.headers.set('Authorization', token)
+    let params = JSON.stringify(equipo)
+    return this._http.post(this.url + '/registrarEquipo/' + idLiga, params, { headers: headersToken })
+  }
+
+  obtenerEquiposLiga(ligaID: String): Observable<any> {
+    let headersToken = this.headers.set('Authorization', this.token)
+    return this._http.get(this.url + '/obtenerEquiposLiga/' + ligaID, { headers: this.headers })
+  }
 
 
-    editarEquipo(equipo, equipoID:String, token): Observable<any>{
-        let headersToken = this.headers.set('Authorization', token)
-        let params = JSON.stringify(equipo)
-        return this._http.put(this.url+'/editarEquipo/'+ equipoID,params,{headers:headersToken})
-    }
+  editarEquipo(equipo, equipoID: String, token): Observable<any> {
+    let headersToken = this.headers.set('Authorization', token)
+    let params = JSON.stringify(equipo)
+    return this._http.put(this.url + '/editarEquipo/' + equipoID, params, { headers: headersToken })
+  }
 
-    eliminarEquipo(equipoID, token): Observable<any>{
-        let headersToken = this.headers.set('Authorization', token)
-        return this._http.delete(this.url+'/eliminarEquipo/'+equipoID,{headers:headersToken})
-    }
+  eliminarEquipo(equipoID, token): Observable<any> {
+    let headersToken = this.headers.set('Authorization', token)
+    return this._http.delete(this.url + '/eliminarEquipo/' + equipoID, { headers: headersToken })
+  }
 
-    obtenerEquipoId(idEquipo: String): Observable<any>{
-        return this._http.get(this.url+'/obtenerEquipoID/'+idEquipo,{headers: this.headers})
-    }
+  obtenerEquipoId(idEquipo: String): Observable<any> {
+    return this._http.get(this.url + '/obtenerEquipoID/' + idEquipo, { headers: this.headers })
+  }
+
+  crearTabla(idLiga: String): Observable<any> {
+    return this._http.get(this.url + '/crearTabla/' + idLiga, { headers: this.headers })
+  }
 
 }
 

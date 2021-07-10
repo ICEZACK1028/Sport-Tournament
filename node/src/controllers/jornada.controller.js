@@ -146,18 +146,6 @@ function create2DArray(filas, columnas) {
     return x;
 }
 
- function simularPartido(req,res){
-    var subdocumentId = req.params.juegoId;
-    var equipo1goles = Math.round(Math.random()*5)
-    var equipo2goles = Math.round(Math.random()*5)
-
-    jornadaModel.findOneAndUpdate({"games._id": subdocumentId}, {"games.$.goles1": equipo1goles, "games.$.goles2": equipo2goles}, {new: true, useFindAndModify: false}, (err, juegoActualizado) => {
-        if(err) return res.status(500).send({mensaje: "Error al simular partido"});
-        return res.status(200).send({mensaje: juegoActualizado});
-    })
-
-}
-
 function obtenerJornadaPorLiga(req, res) {
     var ligaId = req.params.ligaId
 
@@ -172,6 +160,5 @@ function obtenerJornadaPorLiga(req, res) {
 
 module.exports = {
     iniciarLiga,
-    simularPartido,
     obtenerJornadaPorLiga
 }

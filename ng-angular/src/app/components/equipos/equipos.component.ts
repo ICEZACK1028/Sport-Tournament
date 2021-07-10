@@ -23,7 +23,7 @@ export class EquiposComponent implements OnInit {
   public equipoID
   public ligaID
   public equipos
-  
+
   public idLiga
   public equipoModelId
   public equipoModelGet
@@ -34,7 +34,7 @@ export class EquiposComponent implements OnInit {
   constructor(private _usuarioService: UsuarioService, private _equipoService: EquipoService,
     private _ligaService: LigaService, private _jornadaService: JornadaService, private _activatedRoute: ActivatedRoute) {
     this.equipoModel = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
-    
+
     this.equipoModelId = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
     this.equipoModelGet = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
     this.equipoModelAdd = new Equipo("", "", "", 0, 0, 0, 0, 0, 0, 0, 0, "")
@@ -89,16 +89,16 @@ export class EquiposComponent implements OnInit {
         this.equipoModelAdd.nombre = ""
         this.equipoModelAdd.imagen = ""
       },
-      (error) =>{
+      (error) => {
         console.log(error);
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'No pueden haber mas de 10 equipos',
+          title: error.error.mensaje,
           showConfirmButton: false,
           timer: 1500,
         });
-        
+
       }
     )
   }
@@ -139,6 +139,15 @@ export class EquiposComponent implements OnInit {
       }
     )
   }
+
+  crearTabla() {
+    this._equipoService.crearTabla(this.ligaID).subscribe(
+      response => {
+        console.log(response);
+      }
+    )
+  }
+
 
 
 }
