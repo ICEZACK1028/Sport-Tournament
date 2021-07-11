@@ -126,7 +126,7 @@ function obtenerEquiposLiga(req, res){
         if(err) return res.status(404).send({ mensaje: 'Error al obtener los equipos'});
         if(!equiposEncontrados) return res.status(404).send({ mensaje: 'Error al obtener los datos'});
         return res.status(200).send({equiposEncontrados})
-    })
+    }).sort({"PT": -1, "GF": -1})
 }
 
 function crearTabla(req,res){

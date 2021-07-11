@@ -62,10 +62,14 @@
     <div class="col">
     </div>
     <div class="col-5">
+      <div>
+        <h2 class="subtitle">Tabla de posiciones</h2>
+      </div>
+      <br>
       <table class="table table-striped">
         <thead>
           <tr style="text-align: center;">
-            <th colspan="2">Equipo</th>
+            <th colspan="3">Equipo</th>
             <th scope="col">PJ</th>
             <th scope="col">PG</th>
             <th scope="col">PP</th>
@@ -77,8 +81,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let eqp of equipoModel; " style="vertical-align: middle; text-align: center;">
-            <td><img src="{{eqp.imagen}}" style="height: 50px;"></td>
+          <tr *ngFor="let eqp of equipoModel; let i = index" style="vertical-align: middle; text-align: center; ">
+            <td><b>{{i+1}}</b></td>
+            <td><img src="{{eqp.imagen}}" style="height: 35px;"></td>
             <td style="text-align: left;">{{eqp.nombre}}</td>
             <td>{{eqp.PJ}}</td>
             <td>{{eqp.PG}}</td>

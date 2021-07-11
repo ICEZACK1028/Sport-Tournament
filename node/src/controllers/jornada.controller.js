@@ -114,7 +114,7 @@ console.log(goles);
             // console.log(goles);
 
             rondas[i][j] = k
-            jornadaModel.findOneAndUpdate({numero: i+1},
+            jornadaModel.findOneAndUpdate({numero: i+1, liga: ligaId},
             { $push:{ games: {equipo1: equipo1,nombre1: nombre1, goles1: gol1,imagen1: imagen1,
                               equipo2: equipo2,nombre2: nombre2, goles2: gol2, imagen2: imagen2}}},
             {new:true, useFindAndModify: false},(err, jornadaFase1Add) => { 
